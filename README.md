@@ -18,5 +18,4 @@ Execute the up.sh script:
 . up.sh
 ```
 
-Once setup the website should be available at http://localhost:81.
-accessible on port 81.
+Once setup the website should be available at http://localhost:81. Accessible on port 81.
