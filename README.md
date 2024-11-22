@@ -1,7 +1,22 @@
-# comp3006-assessment-template
+# Full-Stack Project
 
-This is the template for your Comp3006 Assessment. It uses a single repo.
+This project is developed for Assessment 2 of COMP3006. The goal is to create a functional eCommerce System.
 
-Refer to the brief document for details regarding what is required.
+## Technology Stack
 
-It also contains a .gitignore file, which should prevent unnecessary (temporary) files being committed (specific to Node.js, which is required).
+- **Frontend**: HTML, CSS, JavaScript, React
+- **Backend**: Node.js
+- **Database**: MongoDB
+- **Other**: WebSocket for real-time communication, Docker for containerization, GitHub for version control
+
+## Setup Instructions
+
+Navigate to the Fullstack folder inside the Project Directory.
+
+Execute the up.sh script:
+```bash
+. up.sh
+```
+
+Once setup the website should be available at http://localhost:81.
+accessible on port 81.
