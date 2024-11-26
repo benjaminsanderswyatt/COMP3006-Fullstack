@@ -6,6 +6,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "81:80"
+    networks:
+      - stack-network
 
   backend:
     container_name: backend
@@ -25,6 +27,8 @@ services:
      - PORT=9000
      - MONGO_URI=mongodb://root:password@database:27017/database?authSource=admin
      - NODE_ENV=production
+    networks:
+      - stack-network
 
   database:
     container_name: database
@@ -37,3 +41,7 @@ services:
      MONGO_INITDB_DATABASE: database
     volumes:
      - ./data:/data/db
+
+networks:
+  stack-network:
+    driver: bridge

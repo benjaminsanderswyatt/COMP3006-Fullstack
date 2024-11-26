@@ -4,7 +4,7 @@ FROM node:22 AS build
 WORKDIR /app
 
 # Copy package.json and package-lock.json (if present)
-COPY package*.json ./
+COPY package*.json ./ package-lock.json ./
 
 # Install dependencies
 RUN npm install
@@ -20,6 +20,9 @@ FROM nginx:alpine
 
 # Copy the build output from the build stage
 COPY --from=build /app/build /usr/share/nginx/html
+
+# Copy the nginx configs for routing
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port 80 (Nginx default port)
 EXPOSE 80
