@@ -1,17 +1,32 @@
-const API_URL = 'http://backend:9000/api/users';
+const API_URL = 'http://localhost:82/api/users';
 
 
 export async function register(username, email, password) {
-  const response = await fetch(`${API_URL}/register`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, email, password }),
-  });
-  return response.json();
+
+  try {
+    const response = await fetch(`${API_URL}/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, email, password }),
+    });
+
+    const responseJson = await response.json();
+
+    if (!response.ok) {
+      throw new Error(responseJson.message || "Registration failed")
+    }
+
+    return responseJson;
+
+  } catch (error) {
+    return {success: false, message: error.message};
+  }
+
 }
 
 
 export const login = async (email, password) => {
+
   try {
     const response = await fetch(`${API_URL}/login`, {
       method: 'POST',
@@ -19,19 +34,20 @@ export const login = async (email, password) => {
       body: JSON.stringify({ email, password }),
     });
 
+    const responseJson = await response.json();
+
     if (!response.ok) {
-      throw new Error('Failed to log in');
+      throw new Error(responseJson.message || "Failed to log in")
     }
 
-    const data = await response.json();
-    if (data.success && data.token) {
-      localStorage.setItem('token', data.token);
-      return data.token;
+    // Store the token
+    if (responseJson.token) {
+      localStorage.setItem('token', responseJson.token);
     }
 
-    throw new Error(data.message || 'Login failed');
+    return responseJson.token;
+
   } catch (error) {
-    console.error(error);
-    return null;
+    return { success: false, message: error.message };
   }
 };

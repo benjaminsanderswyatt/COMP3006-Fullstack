@@ -7,7 +7,7 @@ services:
     ports:
       - "81:80"
     networks:
-      - stack-network
+      - stacknet
 
   backend:
     container_name: backend
@@ -28,7 +28,7 @@ services:
      - MONGO_URI=mongodb://root:password@database:27017/database?authSource=admin
      - NODE_ENV=production
     networks:
-      - stack-network
+      - stacknet
 
   database:
     container_name: database
@@ -43,5 +43,5 @@ services:
      - ./data:/data/db
 
 networks:
-  stack-network:
+  stacknet:
     driver: bridge
