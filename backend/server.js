@@ -2,8 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
-const productRoutes = require('./routes/productRoutes');
 const { protect } = require('./middleware/authJWT');
+
+console.log('Start of server.js');
 
 connectDB();
 
@@ -16,11 +17,9 @@ const corsOptions = {
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // HTTP methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
 };
-app.use(cors());
-
+app.use(cors(corsOptions));
 
 app.use('/api/users', userRoutes);
-app.use('/api/products', protect, productRoutes);
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 9000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

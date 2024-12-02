@@ -1,5 +1,9 @@
-npm install cors@2.8.5
-npm install express@4.21.1
-npm install mongoose@8.8.1
+#!/bin/bash
+set -e # Exit on error
 
+echo "Installing dependencies..."
+npm install cors express mongoose bcryptjs jsonwebtoken
+
+
+echo "Starting server..."
 node server.js
