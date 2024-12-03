@@ -1,4 +1,4 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code of the frontend/backend and run tests on both
 
 name: Node.js CI
 
@@ -30,10 +30,14 @@ jobs:
         cd backend
         npm ci
         npm run build --if-present
-    - name: Test Backend
+    - name: Backend Unit Tests
       run: |
         cd backend
-        npx mocha -ui tdd tests/*
+        npx mocha -ui tdd tests/unitTests/**/*.js
+    - name: Backend Intergration Tests
+      run: |
+        cd backend
+        npx mocha -ui tdd tests/intergrationTests/**/*.js
 
   frontend:
     name: Frontend

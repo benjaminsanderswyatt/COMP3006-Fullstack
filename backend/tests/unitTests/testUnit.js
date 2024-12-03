@@ -1,5 +1,5 @@
 let chai = require("chai");
-let functions = require("../hello");
+let functions = require("../unitExample");
 suite("Test sayHello", function() {
     test("Test sayHello", function(){
         let expected = "Hello world!!"; // Arrange.
