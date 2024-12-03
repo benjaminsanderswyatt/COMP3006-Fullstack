@@ -1,6 +1,6 @@
 let chai = require("chai");
 let chaiHttp = require("chai-http");
-let server = require("../server");
+let server = require("../integrationExample");
 chai.use(chaiHttp);
     suite("Suite routes", function() {
         test("Test GET /hello", function() {
