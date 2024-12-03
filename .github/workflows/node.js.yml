@@ -9,8 +9,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  backend:
+    name: Backend
     runs-on: ubuntu-latest
 
     strategy:
@@ -25,12 +25,38 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: backend/package-lock.json
-    - name: Install & Build & Test Backend
+    - name: Install & Build Backend
       run: |
         cd backend
         npm ci
         npm run build --if-present
-    - name: Run Tests
+    - name: Test Backend
       run: |
         cd backend
-        npx mocha -ui tdd tests/testHello.js
+        npx mocha -ui tdd tests/*
+
+  frontend:
+    name: Frontend
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [22.x]
+    
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+    - name: Install & Build Frontend
+      run: |
+        cd backend
+        npm ci
+        npm run build --if-present
+    - name: Test Frontend
+      run: |
+        cd backend
+        npx mocha -ui tdd tests/*
