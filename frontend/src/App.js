@@ -33,7 +33,7 @@ const App = () => {
           <Route index element={<Login />} />
 
           {/*Protected Routes*/}
-          <Route path="store" element={<Store />} />
+          <Route path="store" element={<PrivateRoute element={Store} />} />
 
 
           {/*Catch all invalid routes (404)*/}
