@@ -33,11 +33,11 @@ jobs:
     - name: Backend Unit Tests
       run: |
         cd backend
-        npx mocha -ui tdd 'tests/unitTests/**/*.js'
-    - name: Backend Intergration Tests
+        npx mocha -ui tdd 'tests/unitTests/*.js'
+    - name: Backend Integration Tests
       run: |
         cd backend
-        npx mocha -ui tdd 'tests/intergrationTests/**/*.js'
+        npx mocha -ui tdd 'tests/integrationTests/*.js'
 
   frontend:
     name: Frontend
