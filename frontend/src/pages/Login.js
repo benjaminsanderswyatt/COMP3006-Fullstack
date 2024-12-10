@@ -78,7 +78,7 @@ const Login = () => {
         
         if (response.success){
           localStorage.setItem('token', response.token);
-          navigate("/Store"); // Navigate
+          navigate("/store"); // Navigate
         } else {
           alert("Login failed");
         }

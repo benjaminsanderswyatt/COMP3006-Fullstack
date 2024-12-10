@@ -31,7 +31,7 @@ const server = http.createServer(app);
 
 let io = socketIo(server, {
     cors: {
-        origin: 'http://localhost:81', // Frontend URL
+        origin: 'http://localhost:81' // Frontend URL
     },
 });
 //setupWebSocket(io);

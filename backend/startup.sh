@@ -4,14 +4,14 @@ set -e # Exit on error
 
 echo "Installing dependencies..."
 
-echo "Installing cors"
-npm install cors     
-
 echo "Installing express"
 npm install express
 
 echo "Installing mongoose"
 npm install mongoose
+
+echo "Installing cors"
+npm install cors
 
 echo "Installing bcryptjs"
 npm install bcryptjs
