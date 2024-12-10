@@ -1,59 +1,54 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ItemListing from '../components/ItemListing'
+import AddItem from '../components/AddItem';
+import { fetchProducts } from '../api/fetchProducts';
 
 const Store = () => {
-  const products = [
-    {
-      id: 0,
-      image: 'https://placehold.co/600x600',
-      name: 'Product Zero',
-      stock: 10
-    },
+    const [products, setProducts] = useState([]);
 
-    {
-      id: 1,
-      image: 'https://placehold.co/600x600',
-      name: 'Product One',
-      stock: 888
-    },
 
-    {
-      id: 2,
-      image: 'https://placehold.co/600x600',
-      name: 'Product Two',
-      stock: 1
-    },
+    useEffect(() => {
+        const loadProducts = async () => {
+            const products = await fetchProducts();
+            setProducts(products);
+        };
 
-    {
-      id: 3,
-      image: 'https://placehold.co/600x600',
-      name: 'Product Three',
-      stock: 0
+        loadProducts();
+    }, []);
+
+    const handleProductAdded= (newProduct) => {
+        setProducts((prevProducts) => [...prevProducts, newProduct]);
     }
-  ];
 
-  return (
-    <div>
-      <h1>Store</h1>
-      <div style={styles.grid}>
-        {products.map((product) => (
-          <ItemListing key={product.id} product={product} />
-        ))}
-      </div>
-    </div>
-  );
+
+    return (
+        <div style={styles.container}>
+            <h1>Store</h1>
+            {/* Add New Product */}
+            <AddItem onProductAdded={handleProductAdded} />
+
+            {/* List all the products */}
+            <div style={styles.productGrid}>
+                {products.map((product) => (
+                    <ItemListing key={product._id} product={product} />
+                ))}
+            </div>
+        </div>
+    );
 };
-  
+
 const styles = {
-  grid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, 200px)',
-    gap: '20px',
-    padding: '16px',
-    justifyContent: 'center'
-  },
+    container: {
+        padding: '20px',
+        textAlign: 'center',
+    },
+    productGrid: {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+        gap: '16px',
+        marginTop: '20px',
+    },
 };
 
 
 export default Store;
-  

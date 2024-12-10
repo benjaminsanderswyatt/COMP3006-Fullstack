@@ -1,68 +1,56 @@
 import React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:9000");
 
 
-const ItemListing = ({product}) => {
-  const {image, name, stock} = product;
-  const [stockCount, setStockCount] = useState(stock);
+const Products = () => {
+  const [products, setProducts] = useState([]);
 
-  const handleAddToBasket = () => {
-    if (stockCount > 0) {
-      setStockCount(stockCount - 1);
-      alert(`Added ${name} to basket`);
-    } else {
-      alert("Out of Stock");
-    }
+  useEffect(() => {
+    socket.io('initialProducts',(data) => {
+      setProducts(data);
+    });
+
+    socket.on('productUpdated', (updatedProduct) => {
+        setProducts((prevProducts) => {
+          prevProducts.map((product) => 
+            product._id === updatedProduct._id ? updatedProduct : product
+          )
+        });
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+
+  }, []);
+
+  const updateStock = (productId, newStockCount) => {
+    socket.emit('updateStock', {productId, newStockCount});
   };
 
   return (
-    <div style={styles.container}>
-      <img src={image} alt={name} style={styles.image} />
-      <h3 style={styles.name}>{name}</h3>
-      <p style={{...styles.stock, color: stockCount === 0 ? 'red' : 'green'}}>In Stock: {stockCount}</p>
-      <button
-        style={styles.button}
-        onClick={handleAddToBasket}
-        disabled={stockCount === 0}
-      >
-        Add to Basket
-      </button>
+    <div>
+      <h1>Product List</h1>
+      <ul>
+        {products.map((product) => {
+          <li key={product.img}>
+            <img src={product.img} alt={product.name} width="50"/>
+            <p>{product.name}</p>
+            <p>Stock: {product.stockCount}</p>
+            <button onClick={() => updateStock(product._id, product.stockCount -1)}>
+              Decreased Stock
+            </button>
+          </li>
+        })}
+      </ul>
     </div>
   );
+
+
+
 };
 
-
-const styles = {
-  container: {
-    border: '1px solid #ccc',
-    borderRadius: '8px',
-    padding: '16px',
-    textAlign: 'center',
-    maxWidth: '200px',
-    margin: '16px auto',
-  },
-  image: {
-    width: '100%',
-    height: 'auto',
-    borderRadius: '4px',
-  },
-  name: {
-    fontSize: '18px',
-    margin: '8px 0',
-  },
-  stock: {
-    fontSize: '14px'
-  },
-  button: {
-    padding: '10px 16px',
-    backgroundColor: '#007bff',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    fontSize: '16px',
-  },
-};
-
-
-export default ItemListing;
+export default Products;

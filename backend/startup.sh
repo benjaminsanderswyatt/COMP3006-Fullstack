@@ -2,7 +2,7 @@
 set -e # Exit on error
 
 echo "Installing dependencies..."
-npm install cors express mongoose bcryptjs jsonwebtoken
+npm install cors express mongoose bcryptjs jsonwebtoken ws
 
 
 echo "Starting server..."

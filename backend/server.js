@@ -3,8 +3,11 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 const { protect } = require('./middleware/authJWT');
+const socketIo = require('socket.io');
+const http = require('http');
+const setupWebSocket = require('./websocket/setupWebSocket');
 
-console.log('Start of server.js');
+console.log('Setting up server.js');
 
 connectDB();
 
@@ -21,5 +24,23 @@ app.use(cors(corsOptions));
 
 app.use('/api/users', userRoutes);
 
+
+// Setup WebSocket
+const server = http.createServer(app);
+
+let io = socketIo(server, {
+    cors: {
+        origin: 'http://localhost:81', // Frontend URL
+    },
+});
+//setupWebSocket(io);
+webSockets(io);
+
+app.get("/hello", function(request, response){
+    response.send(functions.sayHello());
+})
+
+
+// Start Server
 const PORT = process.env.PORT || 9000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
