@@ -6,6 +6,7 @@ const { protect } = require('./middleware/authJWT');
 const socketIo = require('socket.io');
 const http = require('http');
 const setupWebSocket = require('./websocket/setupWebSocket');
+const webSockets = require('./websocket/WebSockets');
 
 console.log('Setting up server.js');
 

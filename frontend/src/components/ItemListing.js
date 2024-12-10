@@ -35,7 +35,7 @@ const Products = () => {
     <div>
       <h1>Product List</h1>
       <ul>
-        {products.map((product) => {
+        {products.map((product) => (
           <li key={product.img}>
             <img src={product.img} alt={product.name} width="50"/>
             <p>{product.name}</p>
@@ -44,7 +44,7 @@ const Products = () => {
               Decreased Stock
             </button>
           </li>
-        })}
+        ))}
       </ul>
     </div>
   );
