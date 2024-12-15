@@ -25,6 +25,9 @@ app.use(cors(corsOptions));
 
 app.use('/api/users', userRoutes);
 
+const testRoutes = require('./tests/integrationTests/testRoutes');
+app.use('/', testRoutes);
+
 
 // Setup WebSocket
 const server = http.createServer(app);
@@ -36,10 +39,6 @@ let io = socketIo(server, {
 });
 //setupWebSocket(io);
 webSockets(io);
-
-app.get("/hello", function(request, response){
-    response.send(functions.sayHello());
-})
 
 
 // Start Server
