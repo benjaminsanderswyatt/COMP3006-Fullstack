@@ -10,12 +10,7 @@ const webSockets = require('./websocket/WebSockets');
 
 console.log('Setting up server.js');
 
-
-if (process.env.NODE_ENV === 'production'){
-    console.log("connecting........");
-    connectDB();
-}
-
+connectDB();
 
 const app = express();
 app.use(express.json());
@@ -30,9 +25,6 @@ app.use(cors(corsOptions));
 
 app.use('/api/users', userRoutes);
 
-const testRoutes = require('./tests/integrationTests/testRoutes');
-app.use('/', testRoutes);
-
 
 // Setup WebSocket
 const server = http.createServer(app);
@@ -45,9 +37,6 @@ let io = socketIo(server, {
 //setupWebSocket(io);
 webSockets(io);
 
-
 // Start Server
 const PORT = process.env.PORT || 9000;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
-module.exports = { app, server };
