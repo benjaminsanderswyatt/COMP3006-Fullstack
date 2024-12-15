@@ -19,6 +19,11 @@ jobs:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
       MONGO_INITDB_DATABASE: database
+    steps:
+      - name: Seed database
+        run: |
+          cd backend
+          node seed.js
 
   backend:
     name: Backend
