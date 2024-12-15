@@ -9,21 +9,6 @@ on:
     branches: [ "main" ]
 
 jobs:
-  mongodb:
-    name: MongoDB
-    runs-on: ubuntu-latest
-    
-    strategy:
-      matrix:
-        mongodb-version: ['8.0']
-
-    steps:
-    - uses: actions/checkout@v4
-    - name: Start MongoDB
-      uses: ./
-      with:
-        mongodb-version: ${{ matrix.mongodb-version }}
-
   backend:
     name: Backend
     runs-on: ubuntu-latest
