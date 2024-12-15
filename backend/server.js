@@ -10,7 +10,12 @@ const webSockets = require('./websocket/WebSockets');
 
 console.log('Setting up server.js');
 
-connectDB();
+
+if (process.env.NODE_ENV !== 'test'){
+    console.log("connecting........");
+    connectDB();
+}
+
 
 const app = express();
 app.use(express.json());
