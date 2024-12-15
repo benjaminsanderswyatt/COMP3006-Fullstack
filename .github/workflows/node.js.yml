@@ -23,6 +23,7 @@ jobs:
   backend:
     name: Backend
     runs-on: ubuntu-latest
+    needs: mongodb
 
     strategy:
       matrix:
