@@ -12,6 +12,8 @@ jobs:
   backend:
     name: Backend
     runs-on: ubuntu-latest
+    env:
+      NODE_ENV: test
 
     strategy:
       matrix:
