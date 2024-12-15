@@ -11,7 +11,7 @@ const webSockets = require('./websocket/WebSockets');
 console.log('Setting up server.js');
 
 
-if (process.env.NODE_ENV !== 'test'){
+if (process.env.NODE_ENV === 'production'){
     console.log("connecting........");
     connectDB();
 }
