@@ -9,6 +9,17 @@ on:
     branches: [ "main" ]
 
 jobs:
+  mongodb:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    options:
+      --health-cmd="curl --silent --fail localhost:27017 || exit 1" --health-interval=10s --health-timeout=5s --health-retries=3
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: database
+
   backend:
     name: Backend
     runs-on: ubuntu-latest
