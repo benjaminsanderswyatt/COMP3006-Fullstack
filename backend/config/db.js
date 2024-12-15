@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 
 const connectDB = async () => {
-  if (process.env.NODE_ENV == production){
+  if (process.env.NODE_ENV !== 'test'){
     const mongoURI = process.env.MONGO_URI || 'mongodb://root:password@database:27017/database?authSource=admin';
 
     try {
@@ -11,7 +11,7 @@ const connectDB = async () => {
       console.log('MongoDB connected');
     } catch (error) {
       console.error('Error connecting to MongoDB:', error.message);
-      process.exit(1);
+      //process.exit(1);
     }
   }
 };
