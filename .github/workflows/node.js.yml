@@ -12,19 +12,7 @@ jobs:
   backend:
     name: Backend
     runs-on: ubuntu-latest
-    env:
-      NODE_ENV: test
-    services:
-      mongodb:
-        image: mongo:latest
-        options: |
-          --health-cmd="mongo --eval 'db.adminCommand(\"ping\")'" 
-          --health-interval=10s 
-          --health-timeout=5s 
-          --health-retries=3
-          -e MONGO_INITDB_ROOT_USERNAME=root
-          -e MONGO_INITDB_ROOT_PASSWORD=password
-          
+
     strategy:
       matrix:
         node-version: [22.x]
