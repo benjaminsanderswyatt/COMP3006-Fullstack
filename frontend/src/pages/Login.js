@@ -6,8 +6,6 @@ import RegisterForm from "../components/RegisterForm";
 import ToggleButton from "../components/ToggleButton";
 import { register, login } from "../api/fetchUsers";
 
-import styles from "../styles/pages/Login.module.css";
-
 const Login = () => {
   const [isRegistering, setIsRegistering] = useState(false);
 
@@ -92,8 +90,8 @@ const Login = () => {
   };
 
   return (
-    <div className={styles.login}>
-      <h1>{isRegistering ? "Register" : "Login"}</h1>
+    <div className={styles.main}>
+      <h1 style={styles.heading}>{isRegistering ? "Register" : "Login"}</h1>
       {isRegistering ? (
         <RegisterForm
           formData={formData}
@@ -111,5 +109,72 @@ const Login = () => {
     </div>
   );
 };
+
+const styles = {
+  main: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: "100vh",
+    background: "linear-gradient(135deg, #6a11cb, #2575fc)",
+    color: "white",
+    fontFamily: "Arial, sans-serif",
+    padding: "20px",
+  },
+  heading: {
+    fontSize: "2.5rem",
+    marginBottom: "20px",
+    textShadow: "0 4px 6px rgba(0, 0, 0, 0.2)",
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    width: "100%",
+    maxWidth: "400px",
+    background: "white",
+    borderRadius: "10px",
+    padding: "20px",
+    boxShadow: "0 6px 15px rgba(0, 0, 0, 0.2)",
+    color: "#333",
+  },
+  input: {
+    fontSize: "1rem",
+    marginBottom: "15px",
+    padding: "10px",
+    border: "1px solid #ccc",
+    borderRadius: "5px",
+    outline: "none",
+    transition: "border 0.3s ease",
+  },
+  inputFocus: {
+    borderColor: "#6a11cb",
+  },
+  button: {
+    fontSize: "1rem",
+    padding: "10px",
+    background: "#6a11cb",
+    border: "none",
+    color: "white",
+    borderRadius: "5px",
+    cursor: "pointer",
+    transition: "background 0.3s ease",
+  },
+  buttonHover: {
+    background: "#2575fc",
+  },
+  toggleButton: {
+    marginTop: "10px",
+    cursor: "pointer",
+    color: "white",
+    textDecoration: "underline",
+    fontSize: "0.9rem",
+  },
+  toggleButtonHover: {
+    color: "#ffefba",
+  }
+}
+
+
 
 export default Login;
