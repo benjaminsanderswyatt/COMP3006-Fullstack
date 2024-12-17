@@ -102,8 +102,8 @@ const styles = {
   },
   content: {
     display: "flex",
-    paddingLeft: "10vw",
-    paddingRight: "10vw"
+    justifyContent: "center",
+    padding: "20px",
   }
 
 
