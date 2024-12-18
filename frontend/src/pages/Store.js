@@ -38,9 +38,10 @@ const Store = () => {
                         <ItemListing key={index} isLoading/>
                     )) 
                 : 
+                    // Products have been loaded
                     products.length > 0 
                     ? 
-                        // Products have been loaded
+                        // Show products
                         products.map((product) => (
                             <ItemListing key={product._id} product={product}/>
                         )) 
@@ -58,16 +59,20 @@ const styles = {
     main: {
         padding: '20px',
         textAlign: 'center',
+        width: '100%',
     },
     message: {
         color: 'red',
         fontWeight: 'bold',
     },
     productList: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
+        border: 'solid',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', // minmax = itemlisting width + 2*padding
         gap: '20px',
+        justifyContent: 'center',
+        padding: '20px',
+        width: '100%',
     },
 };
 
