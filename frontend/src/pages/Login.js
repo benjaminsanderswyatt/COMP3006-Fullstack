@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import LoginForm from "../components/LoginForm";
@@ -15,7 +15,15 @@ const Login = () => {
     password: ""
   });
 
+  // Redirect to store if user has token (already logged in)
   const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/store", { replace: true }); // Redirect
+    }
+  }, [navigate]);
+
 
   const toggleForm = () => {
     setIsRegistering(!isRegistering);
@@ -53,8 +61,8 @@ const Login = () => {
         );
 
         if (response.success) {
-          alert("Registration successful!");
           toggleForm(); // Go to the login page
+          alert("Registration successful!");
         } else {
           alert(response.message || "Registration failed");
         }

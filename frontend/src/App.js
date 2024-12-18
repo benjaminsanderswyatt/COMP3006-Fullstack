@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
 
 import Layout from "./pages/Layout";
 import Login from "./pages/Login";
@@ -17,8 +17,8 @@ const PrivateRoute = ({ element: Component, ...rest }) => {
     return <Navigate to="/" replace />;
   }
 
-  // If token exists, render the requested component
-  return <Component {...rest} />;
+  // If token exists render route
+  return <Outlet />;
 };
 
 
@@ -33,7 +33,9 @@ const App = () => {
           <Route index element={<Login />} />
 
           {/*Protected Routes*/}
-          <Route path="store" element={<PrivateRoute element={Store} />} />
+          <Route path="store" element={<PrivateRoute />}>
+            <Route index element={<Store />}/>
+          </Route>
 
 
           {/*Catch all invalid routes (404)*/}
