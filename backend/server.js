@@ -2,11 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
+const productRoutes = require('./routes/productRoutes');
 const { protect } = require('./middleware/authJWT');
 const socketIo = require('socket.io');
 const http = require('http');
 const setupWebSocket = require('./websocket/setupWebSocket');
-// const webSockets = require('./websocket/WebSockets');
 
 console.log('Setting up server.js');
 
@@ -24,6 +24,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use('/api/users', userRoutes);
+app.use('/api/products', productRoutes);
 
 
 // Setup WebSocket
@@ -35,7 +36,6 @@ let io = socketIo(server, {
     },
 });
 setupWebSocket(io);
-//webSockets(io);
 
 
 // Start Server

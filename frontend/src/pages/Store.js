@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ItemListing from '../components/ItemListing'
-import AddItem from '../components/AddItem';
+import ItemListing from '../components/ItemListing';
 import { fetchProducts } from '../api/fetchProducts';
 
 const Store = () => {
@@ -16,17 +15,9 @@ const Store = () => {
         loadProducts();
     }, []);
 
-    const handleProductAdded= (newProduct) => {
-        setProducts((prevProducts) => [...prevProducts, newProduct]);
-    }
-
-
     return (
         <div style={styles.main}>
             <h1>Store</h1>
-            {/* Add New Product */}
-            <AddItem onProductAdded={handleProductAdded} />
-
             {/* List all the products */}
             <div style={styles.productGrid}>
                 {products.map((product) => (
