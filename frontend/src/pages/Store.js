@@ -5,6 +5,7 @@ import { getAllProducts } from '../api/fetchProducts';
 const Store = () => {
     const [products, setProducts] = useState([]);
     const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(true); // Start loading at true (false when successful load)
 
     useEffect(() => {
         const getProducts = async () => {
@@ -15,6 +16,8 @@ const Store = () => {
             } else {
                 setMessage(response.message);
             }
+
+            setLoading(false); // Replace skeleton with loaded products
         };
 
         getProducts();
@@ -28,13 +31,24 @@ const Store = () => {
             {message && <p style={styles.message}>{message}</p>}
 
             <div style={styles.productList}>
-                {products.length === 0 ? (
-                    <p>No products available</p>
-                ) : (
-                    products.map((product) => (
-                        <ItemListing key={product._id} product={product} />
-                    ))
-                )}
+                {loading 
+                ? 
+                    // Loading products, show skeleton items
+                    Array.from({ length:6 }).map((_,index) => (
+                        <ItemListing key={index} isLoading/>
+                    )) 
+                : 
+                    products.length > 0 
+                    ? 
+                        // Products have been loaded
+                        products.map((product) => (
+                            <ItemListing key={product._id} product={product}/>
+                        )) 
+                    :
+                        // There are no products
+                        <p>No products available</p>
+                }
+
             </div>
         </div>
     );
