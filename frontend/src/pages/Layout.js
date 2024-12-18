@@ -26,15 +26,15 @@ const Layout = () => {
         { token && (
           <>
             <ul style={styles.navbarLinks}>
+              <button style={styles.navbarItem} onClick={() => navigate("/additem")}>Add Item</button>
+            </ul>
+            <div style={styles.navbarSpacer}></div>
+            <ul style={styles.navbarLinks}>
               <button style={styles.navbarItem} onClick={() => navigate("/store")}>Store</button>
             </ul>
             <div style={styles.navbarSpacer}></div>
             <ul style={styles.navbarLinks}>
-              <button style={styles.navbarItem}>hello</button>
-            </ul>
-            <div style={styles.navbarSpacer}></div>
-            <ul style={styles.navbarLinks}>
-              <button style={styles.navbarItem}>Tester button</button>
+              <button style={styles.navbarItem} onClick={() => navigate("/account")}>Account</button>
             </ul>
           </>
         )}

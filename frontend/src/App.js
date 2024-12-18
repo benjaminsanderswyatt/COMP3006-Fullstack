@@ -1,10 +1,13 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
 
-import Layout from "./pages/Layout";
+import Layout from "./pages/Layout"; // Base for each page
+import NoPage from "./pages/NoPage"; // Any invalid page
+
 import Login from "./pages/Login";
 import Store from "./pages/Store";
-import NoPage from "./pages/NoPage";
+import Account from "./pages/Account";
+import AddItem from "./pages/AddItem";
 
 import './styles/App.css';
 
@@ -33,8 +36,17 @@ const App = () => {
           <Route index element={<Login />} />
 
           {/*Protected Routes*/}
+
           <Route path="store" element={<PrivateRoute />}>
             <Route index element={<Store />}/>
+          </Route>
+
+          <Route path="addItem" element={<PrivateRoute />}>
+            <Route index element={<AddItem />}/>
+          </Route>
+
+          <Route path="account" element={<PrivateRoute />}>
+            <Route index element={<Account />}/>
           </Route>
 
 

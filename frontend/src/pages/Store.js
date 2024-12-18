@@ -22,7 +22,7 @@ const Store = () => {
 
 
     return (
-        <div style={styles.container}>
+        <div style={styles.main}>
             <h1>Store</h1>
             {/* Add New Product */}
             <AddItem onProductAdded={handleProductAdded} />
@@ -38,7 +38,7 @@ const Store = () => {
 };
 
 const styles = {
-    container: {
+    main: {
         padding: '20px',
         textAlign: 'center',
     },

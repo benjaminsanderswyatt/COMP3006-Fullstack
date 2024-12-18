@@ -1,41 +1,19 @@
-const Product = require('../models/Product');
-
 const setupWebSocket = (io) => {
+    let connectedUsers = 0;
+
     io.on('connection', (socket) => {
-        console.log('A client connected');
+        connectedUsers++;
+        console.log(`User connected. Total users: ${connectedUsers}`);
 
-        // Emit stock number
-        Product.find()
-            .then((products) => {
-                socket.emit('stockUpdate', products);
-            })
-            .catch((error) => {
-                console.error('Error fetching products: ', error);
-            });
+        // Broadcast user count
+        io.emit('userCount', connectedUsers);
 
-        
-        socket.on('addToBasket', async ({productId}) => {
-            try {
-                const product = await Product.findById(productId);
-
-                if (product && product.stock > 0){
-                    product.stock -= 1;
-                    await product.save();
-
-                    //Notify all clients
-                    io.emit('stockUpdate', [product]);
-
-                } else {
-                    socket.emit('outOfStock', {productId});
-                }
-            } catch (error) {
-                console.error('Error updating stock: ', error);
-            }
-        });
-
-        // Handle disconnect
         socket.on('disconnect', () => {
-            console.log('A client disconnected');
+            connectedUsers--;
+            console.log(`User disconnected. Total users: ${connectedUsers}`);
+
+            // Broadcast user count
+            io.emit('userCount', connectedUsers);
         });
     });
 };

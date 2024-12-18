@@ -6,7 +6,7 @@ const { protect } = require('./middleware/authJWT');
 const socketIo = require('socket.io');
 const http = require('http');
 const setupWebSocket = require('./websocket/setupWebSocket');
-const webSockets = require('./websocket/WebSockets');
+// const webSockets = require('./websocket/WebSockets');
 
 console.log('Setting up server.js');
 
@@ -34,8 +34,9 @@ let io = socketIo(server, {
         origin: 'http://localhost:81' // Frontend URL
     },
 });
-//setupWebSocket(io);
-webSockets(io);
+setupWebSocket(io);
+//webSockets(io);
+
 
 // Start Server
 const PORT = process.env.PORT || 9000;
