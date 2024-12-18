@@ -84,6 +84,11 @@ const styles = {
     height: "40px",
     width: "60px",
     marginLeft: "4px",
+    background: "aliceblue",
+    border: "grey",
+    borderRadius: "8px",
+    borderWidth: "thin",
+    borderStyle: "solid",
   },
   passwordField: {
     display: "flex",
