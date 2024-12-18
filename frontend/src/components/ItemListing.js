@@ -1,56 +1,34 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import { io } from "socket.io-client";
+import React from 'react';
 
-const socket = io("http://localhost:9000");
-
-
-const Products = () => {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    socket.io('initialProducts',(data) => {
-      setProducts(data);
-    });
-
-    socket.on('productUpdated', (updatedProduct) => {
-        setProducts((prevProducts) => {
-          prevProducts.map((product) => 
-            product._id === updatedProduct._id ? updatedProduct : product
-          )
-        });
-    });
-
-    return () => {
-      socket.disconnect();
-    };
-
-  }, []);
-
-  const updateStock = (productId, newStockCount) => {
-    socket.emit('updateStock', {productId, newStockCount});
-  };
-
-  return (
-    <div>
-      <h1>Product List</h1>
-      <ul>
-        {products.map((product) => (
-          <li key={product.img}>
-            <img src={product.img} alt={product.name} width="50"/>
-            <p>{product.name}</p>
-            <p>Stock: {product.stockCount}</p>
-            <button onClick={() => updateStock(product._id, product.stockCount -1)}>
-              Decreased Stock
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-
-
-
+const ItemListing = ({ product }) => {
+    return (
+        <div style={styles.productCard}>
+            <img
+                src={product.image}
+                alt={product.name}
+                style={styles.productImage}
+            />
+            <h3>{product.name}</h3>
+            <p>Stock: {product.stock}</p>
+        </div>
+    );
 };
 
-export default Products;
+const styles = {
+    productCard: {
+        border: '1px solid #ddd',
+        borderRadius: '8px',
+        padding: '15px',
+        width: '200px',
+        textAlign: 'center',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    },
+    productImage: {
+        width: '100%',
+        height: '150px',
+        objectFit: 'cover',
+        borderRadius: '8px',
+    },
+};
+
+export default ItemListing;

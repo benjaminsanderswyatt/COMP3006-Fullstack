@@ -16,7 +16,7 @@ export async function register(username, email, password) {
       throw new Error(responseJson.message || "Registration failed")
     }
 
-    return responseJson;
+    return {success: true, message: responseJson};
 
   } catch (error) {
     return {success: false, message: error.message};

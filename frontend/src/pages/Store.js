@@ -1,28 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import ItemListing from '../components/ItemListing';
-import { fetchProducts } from '../api/fetchProducts';
+import { getAllProducts } from '../api/fetchProducts';
 
 const Store = () => {
     const [products, setProducts] = useState([]);
-
+    const [message, setMessage] = useState('');
 
     useEffect(() => {
-        const loadProducts = async () => {
-            const products = await fetchProducts();
-            setProducts(products);
+        const getProducts = async () => {
+            const response = await getAllProducts();
+
+            if (response.success) {
+                setProducts(response.message);
+            } else {
+                setMessage(response.message);
+            }
         };
 
-        loadProducts();
+        getProducts();
     }, []);
+
 
     return (
         <div style={styles.main}>
             <h1>Store</h1>
             {/* List all the products */}
-            <div style={styles.productGrid}>
-                {products.map((product) => (
-                    <ItemListing key={product._id} product={product} />
-                ))}
+            {message && <p style={styles.message}>{message}</p>}
+
+            <div style={styles.productList}>
+                {products.length === 0 ? (
+                    <p>No products available</p>
+                ) : (
+                    products.map((product) => (
+                        <ItemListing key={product._id} product={product} />
+                    ))
+                )}
             </div>
         </div>
     );
@@ -33,11 +45,15 @@ const styles = {
         padding: '20px',
         textAlign: 'center',
     },
-    productGrid: {
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-        gap: '16px',
-        marginTop: '20px',
+    message: {
+        color: 'red',
+        fontWeight: 'bold',
+    },
+    productList: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        gap: '20px',
     },
 };
 

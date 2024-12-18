@@ -12,7 +12,7 @@ const Layout = () => {
   };
 
   return (
-    <constainer style={styles.constainer}>
+    <div style={styles.constainer}>
       <div style={styles.header}>
         <h1>Header</h1>
         { token && (
@@ -26,7 +26,7 @@ const Layout = () => {
         { token && (
           <>
             <ul style={styles.navbarLinks}>
-              <button style={styles.navbarItem} onClick={() => navigate("/additem")}>Add Item</button>
+              <button style={styles.navbarItem} onClick={() => navigate("/create")}>Create</button>
             </ul>
             <div style={styles.navbarSpacer}></div>
             <ul style={styles.navbarLinks}>
@@ -40,11 +40,11 @@ const Layout = () => {
         )}
       </nav>
 
-      <container style={styles.content}>
+      <div style={styles.content}>
         <Outlet />
-      </container>
+      </div>
       
-    </constainer>
+    </div>
   )
 };
 

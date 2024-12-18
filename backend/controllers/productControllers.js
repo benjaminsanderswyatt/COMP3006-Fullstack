@@ -1,5 +1,6 @@
 const Product = require('../models/Product');
 
+// Add a product
 exports.addProduct = async (req, res) => {
   const { name, image, stock } = req.body;
 
@@ -20,3 +21,15 @@ exports.addProduct = async (req, res) => {
 
   }
 };
+
+// Get all of the products
+exports.getProducts = async (req, res) => {
+  try {
+    const products = await Product.find();
+    res.json(products);
+
+  } catch (error) {
+    res.status(500).json({ message: 'Error getting products', error});
+    
+  }
+}
