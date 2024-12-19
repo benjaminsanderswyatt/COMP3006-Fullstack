@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ItemListing = ({ product, isLoading }) => {
+const ItemListing = ({ product, isLoading, button }) => {
   if (isLoading) {
     return (
       <div style={styles.skeletonCard}>
@@ -19,14 +19,20 @@ const ItemListing = ({ product, isLoading }) => {
                 alt={product.name}
                 style={styles.productImage}
             />
-            <h3>{product.name}</h3>
-            <p>Stock: {product.stock}</p>
+            <h3 style={styles.name}>{product.name}</h3>
+            <div style={styles.holder}>
+              <p style={styles.stock}>Stock {product.stock}</p>
+              
+              {/* Unique buttons for each page */}
+              {button}
+            </div>
         </div>
     );
 };
 
 const styles = {
   productCard: {
+    background: 'white',
       border: '1px solid #dddddd',
       borderRadius: '8px',
       padding: '15px',
@@ -40,6 +46,21 @@ const styles = {
       objectFit: 'cover',
       borderRadius: '8px',
   },
+  name: {
+    margin: '5px',
+  },
+  stock: {
+    justifySelf: 'left',
+    margin: '2px',
+  },
+  holder: {
+    display: 'flex',
+    margin: '5px',
+  },
+
+
+
+
   
   skeletonCard: {
     border: '1px solid #dddddd',
