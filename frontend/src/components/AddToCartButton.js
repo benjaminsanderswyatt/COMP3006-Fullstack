@@ -10,7 +10,14 @@ const AddToCartButton = ({ product, disabled }) => {
     }
 
     const addToCart = (product) => {
+        // Get the current cart from localstorage
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+        // Add product to the cart
+        cart.push(product);
+
+        // Store back into localstorage
+        localStorage.setItem("cart", JSON.stringify(cart));
     }
 
     // Styles changes based on disabled
