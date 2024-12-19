@@ -24,10 +24,6 @@ const Store = () => {
         getProducts();
     }, []);
 
-    const handleAddToCart = (product) => {
-        console.log(`${product.name} added to cart!`);
-      };
-
 
     const product = {
         name: "Test Name",
@@ -35,8 +31,6 @@ const Store = () => {
         stock: 999,
         _id: "test-product-1", // Ensure a unique key for the product
     };
-    //<ItemListing key={product._id} product={product}/>
-
 
     return (
         <div style={styles.main}>
@@ -45,13 +39,6 @@ const Store = () => {
             {message && <p style={styles.message}>{message}</p>}
 
             <div style={styles.productList}>
-            <ItemListing key={product._id} product={product} button={<AddToCartButton product={product} />}/>
-            <ItemListing key={product._id} product={product}/>
-            <ItemListing key={product._id} product={product}/>
-            <ItemListing key={product._id} product={product}/>
-            <ItemListing key={product._id} product={product}/>
-            <ItemListing key={product._id} product={product}/>
-
 
                 {loading 
                 ? 

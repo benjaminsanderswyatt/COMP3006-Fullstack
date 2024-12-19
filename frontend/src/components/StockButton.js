@@ -1,16 +1,29 @@
-import React from "react";
+import React from 'react';
 
-const StockButton = ({ product, increaseStock, decreaseStock }) => (
-    <div style={styles.stockHolder}>
-        <button style={styles.StockButton} onClick={() => increaseStock(product)}>
-            +
-        </button>
+const StockButton = ({ product }) => {
 
-        <button style={styles.StockButton} onClick={() => decreaseStock(product)}>
-            -
-        </button>
-    </div>
-);
+
+    const increaseStock = (product) => {
+
+    }
+
+    const decreaseStock = (product) => {
+
+    }
+
+    return (
+        <div style={styles.stockHolder}>
+            <button style={styles.StockButton} onClick={increaseStock(product)}>
+                +
+            </button>
+
+            <button style={styles.StockButton} onClick={decreaseStock(product)}>
+                -
+            </button>
+        </div>
+    )
+    
+};
 
 const styles = {
     StockButton: {

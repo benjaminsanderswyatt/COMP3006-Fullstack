@@ -1,10 +1,17 @@
-import React from "react";
+import React from 'react';
 
-const RemoveProduct = ({ product, removeProduct }) => (
-    <button style={styles.RemoveProduct} onClick={() => removeProduct(product)}>
-        Remove
-    </button>
-);
+const RemoveProduct = ({ product }) => {
+
+    const removeProduct = (product) => {
+
+    }
+
+    return (
+        <button style={styles.RemoveProduct} onClick={removeProduct(product)}>
+            Remove
+        </button>
+    )
+};
 
 const styles = {
     RemoveProduct: {

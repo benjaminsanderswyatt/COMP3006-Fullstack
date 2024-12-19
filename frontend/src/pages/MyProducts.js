@@ -1,17 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AddProduct from '../components/AddProduct.js';
 import CurrentlySelling from '../components/CurrentlySelling.js';
 import ItemListing from '../components/ItemListing.js';
-import StockButton from '../components/StockButton';
-import RemoveButton from '../components/RemoveButton';
+import IncDecRemove from '../components/IncDecRemove';
 
 const MyProducts = () => {
-    const product = {
-        name: "Test Name",
-        image: "https://placehold.co/600x400",
-        stock: 999,
-        _id: "test-product-1", // Ensure a unique key for the product
-    };
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true); // Start loading at true (false when successful load)
+
 
     return (
         <div style={styles.main}>
@@ -20,9 +16,30 @@ const MyProducts = () => {
 
             <CurrentlySelling />
 
-            
+            <div style={styles.productList}>
 
-            <ItemListing key={product._id} product={product} button={<div style={styles.temp}><StockButton product={product} /><RemoveButton product={product} /></div>}/>
+
+                {loading 
+                ? 
+                    // Loading products, show skeleton items
+                    Array.from({ length:6 }).map((_,index) => (
+                        <ItemListing key={index} isLoading/>
+                    )) 
+                : 
+                    // Products have been loaded
+                    products.length > 0 
+                    ? 
+                        // Show products
+                        products.map((product) => (
+                            <ItemListing key={product._id} product={product} button={<IncDecRemove product={product} />}/>
+                        )) 
+                    :
+                        // There are no products
+                        <p>No products available</p>
+                }
+
+            </div>
+            
 
         </div>
     );
@@ -31,13 +48,22 @@ const MyProducts = () => {
 const styles = {
     main: {
         padding: '20px',
-        textAlign: 'center',
-    },
-    temp: {
+        textAlign: 'left',
         width: '100%',
-        padding: '4px',
-        
-    }
+    },
+    productList: {
+        background: '#ebf9ff',
+        border: 'solid',
+        borderColor: '#070810',
+        borderRadius: '8px',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', // minmax = itemlisting width + 2*padding
+        gap: '20px',
+        justifyContent: 'center',
+        padding: '20px',
+        width: 'auto',
+        justifyItems: 'center',
+    },
 };
 
 
