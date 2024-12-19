@@ -5,19 +5,12 @@ const Layout = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem('token'); // Check for token (user is logged in)
 
-  const handleLogout = () => {
-    // Remove token from localStorage
-    localStorage.removeItem('token');
-    navigate('/');
-  };
-
   return (
     <div style={styles.constainer}>
       <div style={styles.header}>
         <h1>Header</h1>
         { token && (
-          // Logout
-          <button style={styles.logButton} onClick={handleLogout}>Logout</button>
+          <button>Cart</button>
         )}
       </div>
       
