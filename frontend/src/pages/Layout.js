@@ -10,7 +10,7 @@ const Layout = () => {
       <div style={styles.header}>
         <h1>Header</h1>
         { token && (
-          <button>Cart</button>
+          <button onClick={() => navigate("/cart")}>Cart</button>
         )}
       </div>
       
