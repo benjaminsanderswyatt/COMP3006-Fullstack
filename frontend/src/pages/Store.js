@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ItemListing from '../components/ItemListing';
 import { getAllProducts } from '../api/fetchProducts';
+import AddToCartButton from '../components/AddToCartButton';
 
 const Store = () => {
     const [products, setProducts] = useState([]);
@@ -23,6 +24,19 @@ const Store = () => {
         getProducts();
     }, []);
 
+    const handleAddToCart = (product) => {
+        console.log(`${product.name} added to cart!`);
+      };
+
+
+    const product = {
+        name: "Test Name",
+        image: "https://placehold.co/600x400",
+        stock: 999,
+        _id: "test-product-1", // Ensure a unique key for the product
+    };
+    //<ItemListing key={product._id} product={product}/>
+
 
     return (
         <div style={styles.main}>
@@ -31,6 +45,14 @@ const Store = () => {
             {message && <p style={styles.message}>{message}</p>}
 
             <div style={styles.productList}>
+            <ItemListing key={product._id} product={product} button={<AddToCartButton product={product} />}/>
+            <ItemListing key={product._id} product={product}/>
+            <ItemListing key={product._id} product={product}/>
+            <ItemListing key={product._id} product={product}/>
+            <ItemListing key={product._id} product={product}/>
+            <ItemListing key={product._id} product={product}/>
+
+
                 {loading 
                 ? 
                     // Loading products, show skeleton items
@@ -43,7 +65,7 @@ const Store = () => {
                     ? 
                         // Show products
                         products.map((product) => (
-                            <ItemListing key={product._id} product={product}/>
+                            <ItemListing key={product._id} product={product} button={<AddToCartButton product={product} />}/>
                         )) 
                     :
                         // There are no products
@@ -58,7 +80,7 @@ const Store = () => {
 const styles = {
     main: {
         padding: '20px',
-        textAlign: 'center',
+        textAlign: 'left',
         width: '100%',
     },
     message: {
@@ -66,13 +88,17 @@ const styles = {
         fontWeight: 'bold',
     },
     productList: {
+        background: '#ebf9ff',
         border: 'solid',
+        borderColor: '#070810',
+        borderRadius: '8px',
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', // minmax = itemlisting width + 2*padding
         gap: '20px',
         justifyContent: 'center',
         padding: '20px',
-        width: '100%',
+        width: 'auto',
+        justifyItems: 'center',
     },
 };
 

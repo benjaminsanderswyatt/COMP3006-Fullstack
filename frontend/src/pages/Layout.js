@@ -26,7 +26,7 @@ const Layout = () => {
         { token && (
           <>
             <ul style={styles.navbarLinks}>
-              <button style={styles.navbarItem} onClick={() => navigate("/create")}>Create</button>
+              <button style={styles.navbarItem} onClick={() => navigate("/myproducts")}>My Products</button>
             </ul>
             <div style={styles.navbarSpacer}></div>
             <ul style={styles.navbarLinks}>

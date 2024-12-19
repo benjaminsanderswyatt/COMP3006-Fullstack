@@ -10,12 +10,12 @@ const ToggleButton = ({ isRegistering, onClick }) => (
 
 const styles = {
   toggleButton: {
-    background: "none",
-    border: "none",
-    color: "#333B75",
-    textDecoration: "underline",
-    fontSize: "1rem",
-    cursor: "pointer",
+    background: 'none',
+    border: 'none',
+    color: '#333B75',
+    textDecoration: 'underline',
+    fontSize: '1rem',
+    cursor: 'pointer',
   }
 }
 

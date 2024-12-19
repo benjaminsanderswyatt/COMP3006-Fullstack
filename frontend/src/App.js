@@ -7,7 +7,7 @@ import NoPage from "./pages/NoPage"; // Any invalid page
 import Login from "./pages/Login";
 import Store from "./pages/Store";
 import Account from "./pages/Account";
-import Create from "./pages/Create";
+import MyProducts from "./pages/MyProducts";
 
 import './styles/App.css';
 
@@ -41,8 +41,8 @@ const App = () => {
             <Route index element={<Store />}/>
           </Route>
 
-          <Route path="create" element={<PrivateRoute />}>
-            <Route index element={<Create />}/>
+          <Route path="myproducts" element={<PrivateRoute />}>
+            <Route index element={<MyProducts />}/>
           </Route>
 
           <Route path="account" element={<PrivateRoute />}>
