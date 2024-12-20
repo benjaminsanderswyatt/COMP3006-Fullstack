@@ -59,4 +59,4 @@ jobs:
     - name: Test Frontend
       run: |
         cd frontend
-        npx mocha -ui tdd 'tests/*'
+        npm test
