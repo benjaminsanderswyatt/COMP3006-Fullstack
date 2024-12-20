@@ -3,9 +3,9 @@ import { getCartProducts } from '../api/fetchProducts';
 
 
 const Cart = () => {
-    const [cart, setCart] = useState([]);
+    //const [cart, setCart] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [message, setMessage] = useState('');
+    //const [message, setMessage] = useState('');
 
     useEffect(() => {
         // Stored cart contains array of product ids
@@ -23,9 +23,9 @@ const Cart = () => {
             const response = await getCartProducts(cartIds);
 
             if (response.success) {
-                setCart(response.data);
+                //setCart(response.data);
             } else {
-                setMessage(response.message);
+                //setMessage(response.message);
             }
         } catch (error) {
             setLoading(false);

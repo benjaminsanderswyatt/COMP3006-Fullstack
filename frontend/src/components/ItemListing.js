@@ -22,12 +22,15 @@ const ItemListing = ({ product, isLoading, button }) => {
                 onError={(e) => (e.target.src = 'https://placehold.co/1600x1200')} // Image to display when image cant be found
             />
             <h3 style={styles.name}>{product.name}</h3>
+            <p style={styles.price}>Price: {product.price}</p>
             <div style={styles.holder}>
-              <p style={styles.stock}>Stock: {product.stock}</p>
-              <p style={styles.price}>Price: {product.price}</p>
               
+              <p style={styles.stock}>Stock: {product.stock}</p>
+        
               {/* Unique buttons for each page */}
               {button}
+              
+              
             </div>
         </div>
     );

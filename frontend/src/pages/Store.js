@@ -33,6 +33,7 @@ const Store = () => {
 
             <div style={styles.productList}>
 
+
                 {loading 
                 ? 
                     // Loading products, show skeleton items
