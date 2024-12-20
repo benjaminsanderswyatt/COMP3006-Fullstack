@@ -25,13 +25,6 @@ const Store = () => {
     }, []);
 
 
-    const product = {
-        name: "Test Name",
-        image: "https://placehold.co/600x400",
-        stock: 999,
-        _id: "test-product-1", // Ensure a unique key for the product
-    };
-
     return (
         <div style={styles.main}>
             <h1>Store</h1>

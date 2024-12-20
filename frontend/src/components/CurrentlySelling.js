@@ -50,7 +50,7 @@ const CurrentlySelling = () => {
                     )) 
                     : 
                     // No products are found
-                    <p>No products available</p>
+                    <p>No products being sold</p>
                 }
             </div>
         </div>

@@ -1,13 +1,43 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { getCartProducts } from '../api/fetchProducts';
 
 
 const Cart = () => {
-    
+    const [cart, setCart] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [message, setMessage] = useState('');
 
     useEffect(() => {
-        const cart = JSON.parse(localStorage.getItem("cart")) || [];
-        console.log(cart);
-    });
+        // Stored cart contains array of product ids
+        const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+        
+        if (storedCart.length > 0){
+            fetchCartProducts(storedCart);
+        } else {
+            setLoading(false);
+        }
+    }, []);
+
+    const fetchCartProducts = async (cartIds) => {
+        try {
+            const response = await getCartProducts(cartIds);
+
+            if (response.success) {
+                setCart(response.data);
+            } else {
+                setMessage(response.message);
+            }
+        } catch (error) {
+            setLoading(false);
+        }
+    }
+
+// Show loading text while fetching
+    if (loading) {
+        return <div>Loading...</div>; 
+    }
+    
+
 
     return (
         <div style={styles.main}>
@@ -20,6 +50,20 @@ const styles = {
     main: {
         padding: '20px',
         textAlign: 'center',
+    },
+
+    product: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: '10px 0',
+        border: '1px solid #ccc',
+        padding: '10px',
+    },
+    image: {
+        width: '100px',
+        height: '100px',
+        marginRight: '15px',
     },
 };
 
