@@ -36,6 +36,7 @@ exports.addProduct = async (req, res) => {
   }
 };
 
+
 // Get all of the products
 exports.getProducts = async (req, res) => {
   try {
@@ -57,6 +58,7 @@ exports.getProducts = async (req, res) => {
     
   }
 }
+
 
 // Get all products im selling
 exports.getMyProducts = async (req, res) => {
@@ -80,6 +82,7 @@ exports.getMyProducts = async (req, res) => {
     });
   }
 }
+
 
 // Get products in my cart
 exports.cartProducts = async (req, res) => {

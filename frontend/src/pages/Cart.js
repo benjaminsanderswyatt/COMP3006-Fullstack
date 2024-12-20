@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { getCartProducts } from '../api/fetchProducts';
+import ItemListing from '../components/ItemListing';
+import AddToCartButton from '../components/AddToCartButton';
 
 
 const Cart = () => {
-    //const [cart, setCart] = useState([]);
+    const [cart, setCart] = useState([]);
     const [loading, setLoading] = useState(true);
-    //const [message, setMessage] = useState('');
+    const [message, setMessage] = useState('');
 
     useEffect(() => {
         // Stored cart contains array of product ids
@@ -23,25 +25,43 @@ const Cart = () => {
             const response = await getCartProducts(cartIds);
 
             if (response.success) {
-                //setCart(response.data);
+                setCart(response.data);
             } else {
-                //setMessage(response.message);
+                setMessage(response.message);
             }
         } catch (error) {
             setLoading(false);
         }
     }
 
-// Show loading text while fetching
-    if (loading) {
-        return <div>Loading...</div>; 
-    }
-    
-
-
     return (
         <div style={styles.main}>
             <h1>Cart</h1>
+
+            {message && <p style={styles.message}>{message}</p>}
+
+            <div style={styles.productList}>
+
+
+                {loading 
+                ? 
+                    // Loading item, show skeleton item
+                    <ItemListing isLoading/>
+                    
+                : 
+                    // Products have been loaded
+                    cart.length > 0 
+                    ? 
+                        // Show products
+                        cart.map((product) => (
+                            <ItemListing key={product._id} product={product} button={<AddToCartButton product={product} />}/>
+                        )) 
+                    :
+                        // There are no items
+                        <p>No item in cart</p>
+                }
+
+            </div>
         </div>
     );
 };
@@ -52,18 +72,24 @@ const styles = {
         textAlign: 'center',
     },
 
-    product: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        margin: '10px 0',
-        border: '1px solid #ccc',
-        padding: '10px',
+
+
+    message: {
+        color: 'red',
+        fontWeight: 'bold',
     },
-    image: {
-        width: '100px',
-        height: '100px',
-        marginRight: '15px',
+    productList: {
+        background: '#ebf9ff',
+        border: 'solid',
+        borderColor: '#070810',
+        borderRadius: '8px',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', // minmax = itemlisting width + 2*padding
+        gap: '20px',
+        justifyContent: 'center',
+        padding: '20px',
+        width: 'auto',
+        justifyItems: 'center',
     },
 };
 
