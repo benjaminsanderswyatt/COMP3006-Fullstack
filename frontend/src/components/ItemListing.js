@@ -3,6 +3,7 @@ import React from 'react';
 const ItemListing = ({ product, isLoading, button }) => {
   if (isLoading) {
     return (
+      // Skeleton item to be displayed while loading
       <div style={styles.skeletonCard}>
           <div style={styles.skeletonImage}></div>
           <div style={styles.skeletonText}></div>
@@ -23,6 +24,7 @@ const ItemListing = ({ product, isLoading, button }) => {
             <h3 style={styles.name}>{product.name}</h3>
             <div style={styles.holder}>
               <p style={styles.stock}>Stock: {product.stock}</p>
+              <p style={styles.price}>Price: {product.price}</p>
               
               {/* Unique buttons for each page */}
               {button}
@@ -55,6 +57,9 @@ const styles = {
     justifySelf: 'left',
     margin: '2px',
     width: '100%'
+  },
+  price: {
+
   },
   holder: {
     display: 'flex',

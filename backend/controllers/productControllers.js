@@ -4,9 +4,9 @@ const Product = require('../models/Product');
 exports.addProduct = async (req, res) => {
   const userId = req.user.id;
 
-  const { name, image, stock } = req.body;
+  const { name, image, price, stock } = req.body;
 
-  if (!name || !image || !stock){
+  if (!name || !image || !price || !stock){
     return res.status(400).json({
       success: false,
       message: 'All fields are required',
@@ -15,7 +15,7 @@ exports.addProduct = async (req, res) => {
 
   try {
     // Create product in db
-    const product = new Product({ userId, name, image, stock });
+    const product = new Product({ userId, name, image, price, stock });
     await product.save();
 
     res.status(201).json({
@@ -93,7 +93,7 @@ exports.cartProducts = async (req, res) => {
       });
     }
 
-    const products = await Product.find({_id: { $in: productIds}}).select('_id name image stock');
+    const products = await Product.find({_id: { $in: productIds}}).select('_id name image price stock');
 
     res.status(200).json({
       success: true,

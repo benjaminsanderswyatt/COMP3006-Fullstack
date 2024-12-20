@@ -6,6 +6,7 @@ import AddToCartButton from '../components/AddToCartButton';
 const AddProduct = () => {
     const [name, setName] = useState('');
     const [image, setImage] = useState('');
+    const [price, setPrice] = useState('');
     const [stock, setStock] = useState('');
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState(''); // Stores if the error is 'success' or 'error'
@@ -15,7 +16,7 @@ const AddProduct = () => {
         e.preventDefault();
 
         // All fields have to exist
-        if (!name || !image || !stock) {
+        if (!name || !image || !price || !stock) {
             setMessage('All fields are required.');
             setMessageType('error');
             return;
@@ -26,9 +27,16 @@ const AddProduct = () => {
             setMessageType('error');
             return;
         }
+        // Must cost something
+        if (stock <= 0) {
+            setMessage('Product must have a price.');
+            setMessageType('error');
+            return;
+        }
+
 
         try {
-            const response = await addProduct({ name, image, stock: Number(stock) });
+            const response = await addProduct({ name, image, price: Number(price), stock: Number(stock) });
 
             if (response.success) {
                 setMessage(response.message);
@@ -48,6 +56,7 @@ const AddProduct = () => {
     const product = {
         name: name || "Name",
         image: image,
+        price: price || "?",
         stock: stock || "?"
     };
 
@@ -85,6 +94,22 @@ const AddProduct = () => {
                             value={image}
                             onChange={(e) => setImage(e.target.value)}
                             style={styles.input}
+                        />
+                    </div>
+                    <div style={styles.inputGroup}>
+                        <label>Price:</label>
+                        <input
+                            type="number"
+                            value={price}
+                            onChange={(e) => {
+                                const value = e.target.value;
+
+                                if (value === '' || (!isNaN(value) && value >= 0 && value <= 999))
+                                    setPrice(value)
+                            }}
+                            style={styles.input}
+                            min="0"
+                            max="999"
                         />
                     </div>
                     <div style={styles.inputGroup}>
