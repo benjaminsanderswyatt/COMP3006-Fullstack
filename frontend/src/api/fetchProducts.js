@@ -3,10 +3,13 @@ const API_URL = 'http://localhost:82/api/products';
 // Add a product
 export const addProduct = async (productData) => {
   try {
+    const token = localStorage.getItem('token');
+
     const response = await fetch(`${API_URL}/add`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify(productData),
     });
@@ -28,8 +31,13 @@ export const addProduct = async (productData) => {
 // Fetch all products
 export const getAllProducts = async () => {
   try {
+    const token = localStorage.getItem('token');
+
     const response = await fetch(`${API_URL}/get`, {
-      method: 'GET'
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
     });
 
     const responseJson = await response.json();
