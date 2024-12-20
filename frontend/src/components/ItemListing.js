@@ -49,6 +49,7 @@ const styles = {
   },
   name: {
     margin: '5px',
+    overflowWrap: 'anywhere',
   },
   stock: {
     justifySelf: 'left',
