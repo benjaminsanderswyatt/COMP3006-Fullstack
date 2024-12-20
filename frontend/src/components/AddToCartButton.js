@@ -1,12 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 const AddToCartButton = ({ product, disabled }) => {
+    const navigate = useNavigate();
+    const [isInCart, setIsInCart] = useState(false);
+
+    useEffect(() => {
+        // Check if the product is in your cart
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const productInCart = cart.some(item => item._id === product._id);
+
+        setIsInCart(productInCart);
+    }, [product]);
+
 
     const handleClick = (product) => {
         if (disabled)
             return;
 
-        addToCart(product);
+        if (isInCart) {
+            // Goto Cart
+            navigate('/cart');
+        } else {
+            
+            addToCart(product);
+        }
     }
 
     const addToCart = (product) => {
@@ -18,12 +37,14 @@ const AddToCartButton = ({ product, disabled }) => {
 
         // Store back into localstorage
         localStorage.setItem("cart", JSON.stringify(cart));
+
+        setIsInCart(true);
     }
 
     // Styles changes based on disabled
     const styles = {
         AddToCartButton: {
-        background: disabled ? '#cccccc' : '#3f7faa',
+        background: disabled ? '#cccccc' : isInCart ? '#4CAF50' : '#3f7faa',
         width: '100%',
         border: 'none',
         borderRadius: '10px',
@@ -36,8 +57,8 @@ const AddToCartButton = ({ product, disabled }) => {
 
 
     return (
-        <button style={styles.AddToCartButton} onClick={handleClick(product)} disabled={disabled}>
-            Add to Cart
+        <button style={styles.AddToCartButton} onClick={() => handleClick(product)} disabled={disabled}>
+            {isInCart ? 'Goto Cart' : 'Add to Cart'}
         </button>
     )
 };
