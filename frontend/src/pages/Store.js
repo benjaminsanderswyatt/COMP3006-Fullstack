@@ -13,7 +13,7 @@ const Store = () => {
             const response = await getAllProducts();
 
             if (response.success) {
-                setProducts(response.message);
+                setProducts(response.data);
             } else {
                 setMessage(response.message);
             }

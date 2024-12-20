@@ -16,15 +16,19 @@ export const addProduct = async (productData) => {
 
     const responseJson = await response.json();
 
-    if (!response.ok) {
-      throw new Error('Failed to add product');
+    if (!response.success) {
+      throw new Error(responseJson.message || 'Failed to add product');
     }
 
-    return { success: true, message: responseJson};
+    return {
+      success: true,
+      message: responseJson.message,
+      data: responseJson.data,
+    };
 
   } catch (error) {
-    console.error('Error adding product:', error);
-    return { success: false, message: 'Error adding product' };
+    console.error('Error adding product:', error.message);
+    return { success: false, message: error.message };
   }
 }
 
@@ -43,13 +47,17 @@ export const getAllProducts = async () => {
     const responseJson = await response.json();
 
     if (!response.ok) {
-      throw new Error('Failed to fetch products');
+      throw new Error(responseJson.message || 'Failed to fetch products');
     }
 
-    return { success: true, message: responseJson};
+    return {
+      success: true,
+      message: responseJson.message,
+      data: responseJson.data,
+    };
 
   } catch (error) {
-    console.error('Error fetching products:', error);
-    return { success: false, message: 'Error fetching products' };
+    console.error('Error fetching products:', error.message);
+    return { success: false, message: error.message };
   }
 }

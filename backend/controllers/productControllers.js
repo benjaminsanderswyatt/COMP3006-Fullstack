@@ -2,31 +2,32 @@ const Product = require('../models/Product');
 
 // Add a product
 exports.addProduct = async (req, res) => {
-  // Verify token
-
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
-
-  if (!token) {
-    return res.status(401).json({ message: 'Access token is missing or invalid' });
-  }
-
-
   const { name, image, stock } = req.body;
 
   if (!name || !image || !stock){
-    return res.status(400).json({ message: 'All fields are required' });
+    return res.status(400).json({
+      success: false,
+      message: 'All fields are required',
+    });
   }
 
   try {
     const product = new Product({ name, image, stock });
     await product.save();
 
-    res.status(201).json({ message: 'Product added successfully', product });
+    res.status(201).json({
+      success: true,
+      message: 'Product added successfully',
+      data: product,
+    });
 
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error adding product', error });
+
+    res.status(500).json({
+      success: false,
+      message: 'Error adding product',
+      error: error.message,
+    });
 
 
   }
@@ -36,10 +37,20 @@ exports.addProduct = async (req, res) => {
 exports.getProducts = async (req, res) => {
   try {
     const products = await Product.find();
-    res.json(products);
+
+    res.status(200).json({
+      success: true,
+      message: 'Products fetched successfully',
+      data: products,
+    });
 
   } catch (error) {
-    res.status(500).json({ message: 'Error getting products', error});
+
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching products',
+      error: error.message,
+    });
     
   }
 }
@@ -48,7 +59,7 @@ exports.getProducts = async (req, res) => {
 exports.getMyProducts = async (req, res) => {
   try {
     const products = await Product.find();
-    res.json(products);
+    res.json({ message: 'Products fetched successfully', products });
 
   } catch (error) {
     res.status(500).json({ message: 'Error getting products', error});
@@ -60,7 +71,7 @@ exports.getMyProducts = async (req, res) => {
 exports.cartProducts = async (req, res) => {
   try {
     const products = await Product.find();
-    res.json(products);
+    res.json({ message: 'Products fetched successfully', products });
 
   } catch (error) {
     res.status(500).json({ message: 'Error getting products', error});

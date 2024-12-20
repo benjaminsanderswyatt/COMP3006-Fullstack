@@ -31,7 +31,7 @@ const AddProduct = () => {
             const response = await addProduct({ name, image, stock: Number(stock) });
 
             if (response.success) {
-                setMessage('Product added successfully!');
+                setMessage(response.message);
                 setMessageType('success');
             } else {
                 setMessage(response.message);
