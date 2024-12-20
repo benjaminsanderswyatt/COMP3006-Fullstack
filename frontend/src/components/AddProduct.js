@@ -74,6 +74,8 @@ const AddProduct = () => {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             style={styles.input}
+                            min="4"
+                            max="32"
                         />
                     </div>
                     <div style={styles.inputGroup}>
