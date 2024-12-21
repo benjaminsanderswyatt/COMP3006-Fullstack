@@ -8,11 +8,13 @@ import { register, login } from "../api/fetchUsers";
 
 const Login = () => {
   const [isRegistering, setIsRegistering] = useState(false);
+  const [message, setMessage] = useState('');
 
   const [formData, setFormData] = useState({
     email: "",
     username: "",
-    password: ""
+    password: "",
+    confirmPassword: "",
   });
 
   // Redirect to store if user has token (already logged in)
@@ -32,7 +34,8 @@ const Login = () => {
     setFormData({
       email: "",
       username: "",
-      password: ""
+      password: "",
+      confirmPassword: "",
     });
   };
 
@@ -61,15 +64,15 @@ const Login = () => {
         );
 
         if (response.success) {
+          setMessage("Registration successful!");
           toggleForm(); // Go to the login page
-          alert("Registration successful!");
         } else {
-          alert(response.message || "Registration failed");
+          setMessage(response.message || "Registration failed");
         }
 
       } catch (error) {
         console.error("Registration error:", error);
-        alert("An error occurred during registration");
+        setMessage("An error occurred during registration. Please try again.");
       }
 
     } else {
@@ -86,12 +89,12 @@ const Login = () => {
           localStorage.setItem('token', response.token);
           navigate("/store"); // Navigate
         } else {
-          alert("Login failed");
+          setMessage("Incorrect username or password. Please try again.");
         }
 
       } catch (error) {
         console.error("Login error:", error);
-        alert("An error occurred during login");
+        setMessage("An error occurred during login");
       }
 
     }
@@ -113,6 +116,9 @@ const Login = () => {
           onSubmit={handleSubmit}
         />
       )}
+
+      {message && <p style={styles.message}>{message}</p>}
+
       <ToggleButton isRegistering={isRegistering} onClick={toggleForm} />
     </div>
   );
@@ -132,6 +138,10 @@ const styles = {
     margin: "20px 0px",
     textShadow: "0 4px 6px rgba(0, 0, 0, 0.2)",
   },
+  message: {
+    color: 'red',
+    fontWeight: 'bold',
+},
 }
 
 
