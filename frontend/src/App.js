@@ -1,14 +1,14 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 
-import Layout from "./pages/Layout"; // Base for each page
-import NoPage from "./pages/NoPage"; // Any invalid page
+import Layout from './pages/Layout'; // Base for each page
+import NoPage from './pages/NoPage'; // Any invalid page
 
-import Login from "./pages/Login";
-import Store from "./pages/Store";
-import MyProducts from "./pages/MyProducts";
-import Account from "./pages/Account";
-import Cart from "./pages/Cart";
+import Login from './pages/Login';
+import Store from './pages/Store';
+import MyProducts from './pages/MyProducts';
+import Account from './pages/Account';
+import Cart from './pages/Cart';
 
 
 import './styles/App.css';
