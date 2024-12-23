@@ -28,35 +28,19 @@ const CurrentlySelling = () => {
 
 
     const onRemove = (productId) => {
-
+        console.log("Removed");
         // Remove the product from state
         setProducts((prevProducts) => prevProducts.filter(product => product._id !== productId));
-    }
 
-    const onInc = (productId) => {
-        // Increase the product stock by 1 in the state
-        setProducts((prevProducts) => 
-            prevProducts.map(product => 
-                product._id === productId 
-                    ? { ...product, stock: product.stock + 1 } 
-                    : product
-            )
-        );
-    }    
-    
-    const onDec = (productId) => {
-        // Decrease the product.stock by 1 in the state
-        setProducts((prevProducts) => 
-            prevProducts.map(product => 
-                product._id === productId && product.stock > 0 
-                    ? { ...product, stock: product.stock - 1 } 
-                    : product
-            )
-        );
+        // TODO Remove from db
     }
 
 
-    
+    const onSet = (productId, stockValue) => {
+        console.log(`Set product stock to: ${stockValue}`)
+    }
+
+
     return (
         <div style={styles.main}>
             <h1>Currently Selling</h1>
@@ -77,7 +61,7 @@ const CurrentlySelling = () => {
                         <ItemListing 
                             key={product._id} 
                             product={product} 
-                            button={<IncDecRemove product={product} onRemove={onRemove} onInc={onInc} onDec={onDec} />} 
+                            button={<IncDecRemove product={product} onRemove={onRemove} onSet={onSet}/>} 
                         />
                     )) 
                     : 
@@ -88,7 +72,7 @@ const CurrentlySelling = () => {
         </div>
     );
 };
-
+// button={<IncDecRemove product={product} onRemove={onRemove} onInc={onInc} onDec={onDec} />}
 const styles = {
     main: {
         padding: '20px',

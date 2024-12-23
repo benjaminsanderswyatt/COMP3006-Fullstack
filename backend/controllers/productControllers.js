@@ -113,3 +113,57 @@ exports.cartProducts = async (req, res) => {
     });
   }
 }
+
+
+
+// Sets stock of product
+exports.setStock = async (req, res) => {
+  const userId = req.user.id;
+
+  const { _id, stock } = req.body;
+
+  if (!_id || !stock){
+    return res.status(400).json({
+      success: false,
+      message: 'All fields are required',
+    });
+  }
+
+  if (stock < 0) {
+    return res.status(400).json({
+      success: false,
+      message: 'Stock must be between 0 - 999 inclusive',
+    });
+  }
+
+  try {
+    // Find product by its id
+    const product = await Product.findById(_id);
+
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: 'Product not found',
+      });
+    }
+
+    // Update the stock
+    product.stock = stock;
+    await product.save();
+
+    res.status(201).json({
+      success: true,
+      message: 'Successfully set stock'
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+      success: false,
+      message: 'Error changing stock',
+      error: error.message,
+    });
+
+
+  }
+};

@@ -124,3 +124,37 @@ export const getCartProducts = async (productIds) => {
     return { success: false, message: error.message };
   }
 }
+
+
+// Set stock of product
+export const setStock = async (productId, newStock) => {
+  try {
+    const token = localStorage.getItem('token');
+
+    const response = await fetch(`${API_URL}/setstock`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({ _id: productId, stock: newStock }),
+    });
+
+    const responseJson = await response.json();
+
+    if (!responseJson.success) {
+      throw new Error(responseJson.message || 'Failed to set stock to new amount');
+    }
+    
+    return {
+      success: true,
+      message: responseJson.message,
+      data: responseJson.data,
+    };
+
+  } catch (error) {
+
+    console.error('Error setting stock:', error.message);
+    return { success: false, message: error.message };
+  }
+}

@@ -37,18 +37,20 @@ const ItemListing = ({ product, button}) => {
   
     return (
         <div style={{ ...styles.productCard, ...cardBackground }}>
-            {currentStock === 0 && ( // Overlay out of stock over greyed image
-              <div style={styles.outOfStockOverlay}>Out of Stock</div>
-            )}
-            <img
-                src={product.image}
-                alt={product.name}
-                style={{
-                  ...styles.productImage,
-                  filter: currentStock === 0 ? 'grayscale(100%) blur(1px)' : 'none', // Grey out image to show out of stock
-                }}
-                onError={(e) => (e.target.src = 'https://placehold.co/1600x1200')} // Image to display when image cant be found
-            />
+            <div style={styles.imageHolder}>
+              <img
+                  src={product.image}
+                  alt={product.name}
+                  style={{
+                    ...styles.productImage,
+                    filter: currentStock === 0 ? 'grayscale(100%) blur(1px)' : 'none', // Grey out image to show out of stock
+                  }}
+                  onError={(e) => (e.target.src = 'https://placehold.co/1600x1200')} // Image to display when image cant be found
+              />
+              {currentStock === 0 && ( // Overlay out of stock over greyed image
+                <div style={styles.outOfStockOverlay}>Out of Stock</div>
+              )}
+            </div>
             <h3 style={styles.name}>{product.name}</h3>
             <p style={styles.price}>Price: {product.price}</p>
             <div style={styles.holder}>
@@ -73,6 +75,9 @@ const styles = {
       textAlign: 'center',
       boxShadow: '0 4px 8px rgba(14, 11, 11, 0.1)',
   },
+  imageHolder: {
+    position: 'relative',
+  },
   productImage: {
       width: '100%',
       height: '150px',
@@ -81,8 +86,8 @@ const styles = {
       filter: 'greyscale(1) blur(1px)',
   },
   outOfStockOverlay: {
-    zIndex: '1',
     position: 'absolute',
+    top: '0',
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
     color: 'white',
     fontSize: '18px',

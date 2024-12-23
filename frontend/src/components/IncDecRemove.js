@@ -1,10 +1,10 @@
 import React from 'react';
-import StockButton from '../components/StockButton';
 import RemoveButton from '../components/RemoveButton';
+import SetStockButton from '../components/SetStockButton';
 
-const IncDecRemove = ({ product, onRemove, onInc, onDec }) => (
+const IncDecRemove = ({ product, onRemove, onSet }) => (
     <div style={styles.holder}>
-        <StockButton product={product} onInc={onInc} onDec={onDec} />
+        <SetStockButton product={product} onSet={onSet}/>
         <RemoveButton product={product} onRemove={onRemove}/>
     </div>
 );
