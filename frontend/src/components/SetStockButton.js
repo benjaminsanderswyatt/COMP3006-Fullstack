@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { setStock } from '../api/fetchProducts';
 
 const SetStock = ({ product, onSet }) => {
-    const [showPopup, setShowPopup] = useState(false); // To control popup visibility
-    const [newStock, setNewStock] = useState(''); // To store the entered stock value
-    const [message, setMessage] = useState(''); // Message to display for success/error
-    const [messageType, setMessageType] = useState(''); // 'success' or 'error'
+    const [showPopup, setShowPopup] = useState(false);
+    const [newStock, setNewStock] = useState('');
+    const [message, setMessage] = useState('');
+    const [messageType, setMessageType] = useState('');
 
-    // Function to handle the submission of the new stock value
+    
     const handleSetStock = async () => {
         const stockValue = parseInt(newStock);
 
@@ -56,7 +56,7 @@ const SetStock = ({ product, onSet }) => {
                 Set Stock
             </button>
 
-            {/* Popup Modal */}
+            {/* Popup */}
             {showPopup && (
                 <div style={styles.popupOverlay}>
                     <div style={styles.popupContent}>

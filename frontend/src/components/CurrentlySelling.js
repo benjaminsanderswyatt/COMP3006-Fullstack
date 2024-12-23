@@ -72,7 +72,7 @@ const CurrentlySelling = () => {
         </div>
     );
 };
-// button={<IncDecRemove product={product} onRemove={onRemove} onInc={onInc} onDec={onDec} />}
+
 const styles = {
     main: {
         padding: '20px',
