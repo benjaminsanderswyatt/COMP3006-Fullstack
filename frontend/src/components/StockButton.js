@@ -1,23 +1,14 @@
 import React from 'react';
 
-const StockButton = ({ product }) => {
-
-
-    const increaseStock = (product) => {
-
-    }
-
-    const decreaseStock = (product) => {
-
-    }
+const StockButton = ({ product, onInc, onDec }) => {
 
     return (
         <div style={styles.stockHolder}>
-            <button style={styles.StockButton} onClick={increaseStock(product)}>
+            <button style={styles.StockButton} onClick={onInc(product._id)}>
                 +
             </button>
 
-            <button style={styles.StockButton} onClick={decreaseStock(product)}>
+            <button style={styles.StockButton} onClick={onDec(product._id)}>
                 -
             </button>
         </div>

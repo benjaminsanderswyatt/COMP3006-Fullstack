@@ -1,13 +1,9 @@
 import React from 'react';
 
-const RemoveProduct = ({ product }) => {
-
-    const removeProduct = (product) => {
-
-    }
-
+const RemoveProduct = ({ product, onRemove }) => {
+   
     return (
-        <button style={styles.RemoveProduct} onClick={removeProduct(product)}>
+        <button style={styles.RemoveProduct} onClick={onRemove(product._id)}>
             Remove
         </button>
     )

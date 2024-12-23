@@ -26,6 +26,18 @@ const CurrentlySelling = () => {
 
     }, []);
 
+    const onRemove = (productId) => {
+
+    }
+
+    const onInc = (productId) => {
+        
+    }    
+    
+    const onDec = (productId) => {
+        
+    }
+
 
     return (
         <div style={styles.main}>
@@ -47,7 +59,7 @@ const CurrentlySelling = () => {
                         <ItemListing 
                             key={product._id} 
                             product={product} 
-                            button={<IncDecRemove product={product} />} 
+                            button={<IncDecRemove product={product} onRemove={onRemove} onInc={onInc} onDec={onDec} />} 
                         />
                     )) 
                     : 
