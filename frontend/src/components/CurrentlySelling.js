@@ -26,19 +26,37 @@ const CurrentlySelling = () => {
 
     }, []);
 
+
     const onRemove = (productId) => {
 
+        // Remove the product from state
+        setProducts((prevProducts) => prevProducts.filter(product => product._id !== productId));
     }
 
     const onInc = (productId) => {
-        
+        // Increase the product stock by 1 in the state
+        setProducts((prevProducts) => 
+            prevProducts.map(product => 
+                product._id === productId 
+                    ? { ...product, stock: product.stock + 1 } 
+                    : product
+            )
+        );
     }    
     
     const onDec = (productId) => {
-        
+        // Decrease the product.stock by 1 in the state
+        setProducts((prevProducts) => 
+            prevProducts.map(product => 
+                product._id === productId && product.stock > 0 
+                    ? { ...product, stock: product.stock - 1 } 
+                    : product
+            )
+        );
     }
 
 
+    
     return (
         <div style={styles.main}>
             <h1>Currently Selling</h1>

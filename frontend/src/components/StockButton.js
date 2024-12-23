@@ -4,11 +4,11 @@ const StockButton = ({ product, onInc, onDec }) => {
 
     return (
         <div style={styles.stockHolder}>
-            <button style={styles.StockButton} onClick={onInc(product._id)}>
+            <button style={styles.StockButton} onClick={() => onInc(product._id)}>
                 +
             </button>
 
-            <button style={styles.StockButton} onClick={onDec(product._id)}>
+            <button style={styles.StockButton} onClick={() => onDec(product._id)}>
                 -
             </button>
         </div>
