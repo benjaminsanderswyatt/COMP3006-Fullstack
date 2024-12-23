@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { getCartProducts } from '../api/fetchProducts';
 import ItemListing from '../components/ItemListing';
-import AddToCartButton from '../components/AddToCartButton';
+import RemoveFromCartButton from '../components/RemoveFromCartButton';
+import SkeletonItems from '../components/SkeletonItems';
 
 
 const Cart = () => {
@@ -29,10 +30,20 @@ const Cart = () => {
             } else {
                 setMessage(response.message);
             }
+
+            setLoading(false);
+
         } catch (error) {
             setLoading(false);
         }
     }
+
+    const handleRemoveFromCart = (updatedCart) => {
+        // Update the cart state after item is removed
+        setCart(updatedCart);
+    };
+
+
 
     return (
         <div style={styles.main}>
@@ -46,7 +57,7 @@ const Cart = () => {
                 {loading 
                 ? 
                     // Loading item, show skeleton item
-                    <ItemListing isLoading/>
+                    <SkeletonItems/>
                     
                 : 
                     // Products have been loaded
@@ -54,7 +65,7 @@ const Cart = () => {
                     ? 
                         // Show products
                         cart.map((product) => (
-                            <ItemListing key={product._id} product={product} button={<AddToCartButton product={product} />}/>
+                            <ItemListing key={product._id} product={product} button={<RemoveFromCartButton product={product} onRemove={handleRemoveFromCart}/>}/>
                         )) 
                     :
                         // There are no items

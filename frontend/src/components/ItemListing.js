@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 const WEBSOCKET_URL = 'http://localhost:82';
 
 
-const ItemListing = ({ product, button }) => {
+const ItemListing = ({ product, button}) => {
   const [currentStock, setCurrentStock] = useState(product.stock);
 
   useEffect(() => {
@@ -33,13 +33,20 @@ const ItemListing = ({ product, button }) => {
   }, [product._id]);
 
 
-
+  const cardBackground = currentStock === 0 ? { background: '#E5E5E5' } : { background: 'white' };
+  
     return (
-        <div style={styles.productCard}>
+        <div style={{ ...styles.productCard, ...cardBackground }}>
+            {currentStock === 0 && ( // Overlay out of stock over greyed image
+              <div style={styles.outOfStockOverlay}>Out of Stock</div>
+            )}
             <img
                 src={product.image}
                 alt={product.name}
-                style={styles.productImage}
+                style={{
+                  ...styles.productImage,
+                  filter: currentStock === 0 ? 'grayscale(100%) blur(1px)' : 'none', // Grey out image to show out of stock
+                }}
                 onError={(e) => (e.target.src = 'https://placehold.co/1600x1200')} // Image to display when image cant be found
             />
             <h3 style={styles.name}>{product.name}</h3>
@@ -59,19 +66,29 @@ const ItemListing = ({ product, button }) => {
 
 const styles = {
   productCard: {
-    background: 'white',
       border: '1px solid #dddddd',
       borderRadius: '8px',
       padding: '15px',
       width: '200px',
       textAlign: 'center',
-      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+      boxShadow: '0 4px 8px rgba(14, 11, 11, 0.1)',
   },
   productImage: {
       width: '100%',
       height: '150px',
       objectFit: 'cover',
       borderRadius: '8px',
+      filter: 'greyscale(1) blur(1px)',
+  },
+  outOfStockOverlay: {
+    zIndex: '1',
+    position: 'absolute',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    color: 'white',
+    fontSize: '18px',
+    padding: '5px 10px',
+    borderRadius: '5px',
+    fontWeight: 'bold',
   },
   name: {
     margin: '5px',

@@ -9,6 +9,7 @@ import { register, login } from "../api/fetchUsers";
 const Login = () => {
   const [isRegistering, setIsRegistering] = useState(false);
   const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState(''); // Stores if the error is 'success' or 'error'
 
   const [formData, setFormData] = useState({
     email: "",
@@ -37,6 +38,13 @@ const Login = () => {
       password: "",
       confirmPassword: "",
     });
+
+    // Reset message type
+    // The messageType is only = success when successfully registered (so it can be transfered to the login)
+    if (messageType === 'error') { 
+      setMessage("");
+      setMessageType("");
+    }
   };
 
   const handleChange = (e) => {
@@ -64,14 +72,17 @@ const Login = () => {
         );
 
         if (response.success) {
+          setMessageType('success');
           setMessage("Registration successful!");
           toggleForm(); // Go to the login page
         } else {
+          setMessageType('error');
           setMessage(response.message || "Registration failed");
         }
 
       } catch (error) {
         console.error("Registration error:", error);
+        setMessageType('error');
         setMessage("An error occurred during registration. Please try again.");
       }
 
@@ -89,16 +100,23 @@ const Login = () => {
           localStorage.setItem('token', response.token);
           navigate("/store"); // Navigate
         } else {
+          setMessageType('error');
           setMessage("Incorrect username or password. Please try again.");
         }
 
       } catch (error) {
         console.error("Login error:", error);
+        setMessageType('error');
         setMessage("An error occurred during login");
       }
 
     }
   };
+
+
+
+  // Message colour, green for success, red for failure
+  const messageStyle = messageType === 'success' ? { color: 'green' } : { color: 'red' };
 
   return (
     <div style={styles.main}>
@@ -117,7 +135,7 @@ const Login = () => {
         />
       )}
 
-      {message && <p style={styles.message}>{message}</p>}
+      {message && <p style={{ ...styles.message, ...messageStyle }}>{message}</p>}
 
       <ToggleButton isRegistering={isRegistering} onClick={toggleForm} />
     </div>
@@ -139,9 +157,9 @@ const styles = {
     textShadow: "0 4px 6px rgba(0, 0, 0, 0.2)",
   },
   message: {
-    color: 'red',
+    marginTop: '15px',
     fontWeight: 'bold',
-},
+  },
 }
 
 
