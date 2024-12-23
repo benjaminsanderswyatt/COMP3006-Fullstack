@@ -3,10 +3,9 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
-const { protect } = require('./middleware/authJWT');
 const socketIo = require('socket.io');
 const http = require('http');
-const setupWebSocket = require('./websocket/setupWebSocket');
+const { setupWebSocket } = require('./websocket/setupWebSocket');
 
 console.log('Setting up server.js');
 

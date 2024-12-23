@@ -1,20 +1,23 @@
-const Product = require('../models/Product');
+let io;
 
-const setupWebSocket = (io) => {
+const setupWebSocket = (serverIo) => {
+  io = serverIo;
+  io.on('connection', (socket) => {
+      console.log('Client connected');
 
-    io.on('connection', (socket) => {
-        console.log('Client connected');
-      
-          // Example: Emit stock updates every 5 seconds for testing
-        setInterval(() => {
-            const productId = "6769952ab1a87564a92e2ca5"; // Example product ID
-            const newStock = Math.floor(Math.random() * 10); // Random stock value
-            console.log(`Emitting stock update for product ${productId}: ${newStock}`);
-            socket.emit(`stockUpdate${productId}`, newStock);
-        }, 5000);
-
-
-      });
+    });
 };
 
-module.exports = setupWebSocket;
+// Function to emit events
+const emitStockUpdate = (productId, newStock) => {
+  console.log("emit");
+  if (io) {
+    io.emit(`stockUpdate${productId}`, newStock);
+    console.log("emitted");
+  }
+};
+
+module.exports = {
+  setupWebSocket,
+  emitStockUpdate,
+};

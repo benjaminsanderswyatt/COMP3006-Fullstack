@@ -1,4 +1,6 @@
 const Product = require('../models/Product');
+const { emitStockUpdate } = require('../websocket/setupWebSocket');
+
 
 // Add a product
 exports.addProduct = async (req, res) => {
@@ -150,6 +152,10 @@ exports.setStock = async (req, res) => {
     // Update the stock
     product.stock = stock;
     await product.save();
+
+    // Emit stock update event
+    emitStockUpdate(product._id, product.stock);
+
 
     res.status(201).json({
       success: true,

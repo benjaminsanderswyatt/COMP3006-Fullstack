@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { setStock } from '../api/fetchProducts';
 
-const SetStock = ({ product, onSet }) => {
+const SetStock = ({ product }) => {
     const [showPopup, setShowPopup] = useState(false);
     const [newStock, setNewStock] = useState('');
     const [message, setMessage] = useState('');
@@ -24,8 +24,6 @@ const SetStock = ({ product, onSet }) => {
             if (response.success) {
                 setMessage(response.message);
                 setMessageType('success');
-
-                onSet(product._id, stockValue)
             } else {
                 setMessage(response.message);
                 setMessageType('error');

@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import ItemListing from '../components/ItemListing';
 import { getMyProducts } from '../api/fetchProducts';
-import IncDecRemove from '../components/IncDecRemove';
+import SetRemoveButtons from '../components/SetRemoveButtons';
 import SkeletonItems from '../components/SkeletonItems';
 
 const CurrentlySelling = () => {
@@ -36,11 +36,6 @@ const CurrentlySelling = () => {
     }
 
 
-    const onSet = (productId, stockValue) => {
-        console.log(`Set product stock to: ${stockValue}`)
-    }
-
-
     return (
         <div style={styles.main}>
             <h1>Currently Selling</h1>
@@ -61,7 +56,7 @@ const CurrentlySelling = () => {
                         <ItemListing 
                             key={product._id} 
                             product={product} 
-                            button={<IncDecRemove product={product} onRemove={onRemove} onSet={onSet}/>} 
+                            button={<SetRemoveButtons product={product} onRemove={onRemove}/>} 
                         />
                     )) 
                     : 
