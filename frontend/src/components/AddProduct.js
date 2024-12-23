@@ -28,7 +28,7 @@ const AddProduct = () => {
             return;
         }
         // Must cost something
-        if (stock <= 0) {
+        if (price <= 0) {
             setMessage('Product must have a price.');
             setMessageType('error');
             return;
