@@ -107,6 +107,7 @@ const styles = {
         cursor: 'pointer',
     },
     popupOverlay: {
+        zIndex: '1',
         position: 'fixed',
         top: 0,
         left: 0,
