@@ -2,6 +2,7 @@ import React, { useState, useEffect} from 'react';
 import ItemListing from '../components/ItemListing';
 import { getMyProducts } from '../api/fetchProducts';
 import IncDecRemove from '../components/IncDecRemove';
+import SkeletonItems from '../components/SkeletonItems';
 
 const CurrentlySelling = () => {
     const [products, setProducts] = useState([]);
@@ -22,6 +23,7 @@ const CurrentlySelling = () => {
         }
 
         fetchProducts();
+
     }, []);
 
 
@@ -35,7 +37,7 @@ const CurrentlySelling = () => {
                     ? 
                     // Show skeletons while loading products
                     Array.from({ length: 6 }).map((_, index) => (
-                        <ItemListing key={index} isLoading />
+                        <SkeletonItems/>
                     )) 
                     : 
                     // Show the products if they have been fetched

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ItemListing from '../components/ItemListing';
 import { getAllProducts } from '../api/fetchProducts';
 import AddToCartButton from '../components/AddToCartButton';
+import SkeletonItems from '../components/SkeletonItems';
 
 const Store = () => {
     const [products, setProducts] = useState([]);
@@ -38,7 +39,7 @@ const Store = () => {
                 ? 
                     // Loading products, show skeleton items
                     Array.from({ length:6 }).map((_,index) => (
-                        <ItemListing key={index} isLoading/>
+                        <SkeletonItems/>
                     )) 
                 : 
                     // Products have been loaded
