@@ -1,5 +1,5 @@
 const Product = require('../models/Product');
-const { emitStockUpdate } = require('../websocket/setupWebSocket');
+const { emitStockUpdate, emitRemoveUpdate } = require('../websocket/setupWebSocket');
 
 // ---------------------- Store ----------------------
 

@@ -180,7 +180,7 @@ export const removeProduct = async (productId) => {
   try {
     const token = localStorage.getItem('token');
 
-    const response = await fetch(`${API_URL}/setstock`, {
+    const response = await fetch(`${API_URL}/removeproduct`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

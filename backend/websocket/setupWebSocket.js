@@ -8,7 +8,7 @@ const setupWebSocket = (serverIo) => {
     });
 };
 
-// Function to emit events
+// Function to emit stock update
 const emitStockUpdate = (productId, newStock) => {
   console.log("emit");
   if (io) {
@@ -17,7 +17,22 @@ const emitStockUpdate = (productId, newStock) => {
   }
 };
 
+
+// Function to emit remove update
+const emitRemoveUpdate = (productId) => {
+  console.log("emit");
+  if (io) {
+    io.emit(`removeUpdate${productId}`);
+    console.log("emitted");
+  }
+};
+
+
+
+
+
 module.exports = {
   setupWebSocket,
   emitStockUpdate,
+  emitRemoveUpdate,
 };

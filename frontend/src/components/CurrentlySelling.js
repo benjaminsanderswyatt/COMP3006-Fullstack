@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import ItemListing from '../components/ItemListing';
-import { getMyProducts } from '../api/fetchProducts';
+import { getMyProducts, removeProduct } from '../api/fetchProducts';
 import SetRemoveButtons from '../components/SetRemoveButtons';
 import SkeletonItems from '../components/SkeletonItems';
 
@@ -8,6 +8,7 @@ const CurrentlySelling = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState('');
+    const [messageType, setMessageType] = useState('');
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -17,6 +18,7 @@ const CurrentlySelling = () => {
                 setProducts(response.data);
             } else {
                 setMessage(response.message);
+                setMessageType('error');
             }
 
             setLoading(false);
@@ -27,19 +29,32 @@ const CurrentlySelling = () => {
     }, []);
 
 
-    const onRemove = (productId) => {
+    const onRemove = async (productId) => {
         console.log("Removed");
         // Remove the product from state
+        // Optimistic approach
         setProducts((prevProducts) => prevProducts.filter(product => product._id !== productId));
 
-        // TODO Remove from db
-    }
+        // Remove from db
+        const response = await removeProduct(productId);
 
+        if (response.success) {
+            setMessage(response.message);
+            setMessageType('success');
+        } else {
+            setMessage(response.message);
+            setMessageType('error');
+        }
+    }
+    
+
+    // Message colour, green for success, red for failure
+    const messageStyle = messageType === 'success' ? { color: 'green' } : { color: 'red' };
 
     return (
         <div style={styles.main}>
             <h1>Currently Selling</h1>
-            {message && <p style={styles.message}>{message}</p>}
+            {message && <p style={{ ...styles.message, ...messageStyle }}>{message}</p>}
 
             <div style={styles.productList}>
                 {loading 
@@ -74,9 +89,9 @@ const styles = {
         textAlign: 'center',
     },
     message: {
-        color: 'red',
+        marginTop: '15px',
         fontWeight: 'bold',
-    },
+      },
     productList: {
         background: '#ebf9ff',
         border: 'solid',
