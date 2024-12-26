@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router';
 
 import Layout from './pages/Layout'; // Base for each page
 import NoPage from './pages/NoPage'; // Any invalid page

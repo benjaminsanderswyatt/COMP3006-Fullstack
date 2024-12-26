@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 const WEBSOCKET_URL = 'http://localhost:82';
 
