@@ -5,7 +5,6 @@ import SetRemoveButtons from '../components/SetRemoveButtons';
 import SkeletonItems from '../components/SkeletonItems';
 
 const CurrentlySelling = ( { products, setProducts } ) => {
-    //const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState('');
@@ -26,7 +25,7 @@ const CurrentlySelling = ( { products, setProducts } ) => {
 
         fetchProducts();
 
-    }, []);
+    }, [setProducts]);
 
 
     const onRemove = async (productId) => {
