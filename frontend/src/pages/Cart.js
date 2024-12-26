@@ -80,6 +80,8 @@ const Cart = () => {
         <div style={styles.main}>
             <h1>Cart</h1>
 
+            
+
             {message && <p style={styles.message}>{message}</p>}
 
             <div style={styles.productList}>
@@ -108,6 +110,8 @@ const Cart = () => {
                 }
 
             </div>
+
+            
         </div>
     );
 };

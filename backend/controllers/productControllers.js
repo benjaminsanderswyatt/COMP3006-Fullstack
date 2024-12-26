@@ -60,6 +60,78 @@ exports.cartProducts = async (req, res) => {
   }
 }
 
+// Buy cart
+exports.buyCart = async (req, res) => {
+  const userId = req.user.id;
+
+  const { cart } = req.body;
+
+  if (!cart || !Array.isArray(cart) || cart.length === 0){
+    return res.status(400).json({
+      success: false,
+      message: 'Cart must have items',
+    });
+  }
+
+
+  try {
+    // Start transaction
+    const session = await Product.startSession(); 
+    session.startTransaction();
+
+    const stockUpdates = []; // For updating stock through websockets
+
+    for (const productId of cart) {
+
+      // Find the product
+      const product = await Product.findById(productId).session(session);
+      if (!product) {
+        throw new Error(`Product with id ${productId} not found`);
+      }
+
+      if (product.stock < 1) {
+        throw new Error(`Insufficient stock for product: ${product.name}`);
+      }
+
+      // Deduct stock by 1
+      product.stock -= 1;
+      await product.save({ session });
+
+      // Prepare stock update event
+      stockUpdates.push({ productId: product._id, stock: product.stock });
+
+    }
+
+    // Commit the transaction
+    await session.commitTransaction();
+    session.endSession();
+
+    // Emit for stock updates for items
+    stockUpdates.forEach(update => emitStockUpdate(update.productId, update.stock));
+
+
+
+    res.status(201).json({
+      success: true,
+      message: 'Successfully bought products'
+    });
+
+  } catch (error) {
+
+    // Rollback transaction on failure
+    await session.abortTransaction();
+    session.endSession();
+
+    res.status(500).json({
+      success: false,
+      message: 'Error buying products',
+      error: error.message,
+    });
+
+
+  }
+};
+
 
 
 // ---------------------- My Products ----------------------
@@ -83,10 +155,19 @@ exports.addProduct = async (req, res) => {
     const product = new Product({ userId, name, image, price, stock });
     await product.save();
 
+
+    console.log(`Db Id: ${product._id}`);
     res.status(201).json({
       success: true,
       message: 'Product added successfully',
-      data: product,
+      data: {
+        _id: product._id,
+        userId: product.userId,
+        name: product.name,
+        image: product.image,
+        price: product.price,
+        stock: product.stock,
+      },
     });
 
   } catch (error) {

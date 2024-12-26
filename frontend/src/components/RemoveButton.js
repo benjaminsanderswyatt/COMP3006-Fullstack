@@ -4,7 +4,7 @@ const RemoveProduct = ({ product, onRemove }) => {
    
     return (
         <button style={styles.RemoveProduct} onClick={() => onRemove(product._id)}>
-            Remove
+            Delete
         </button>
     )
 };

@@ -3,7 +3,7 @@ import { addProduct } from '../api/fetchProducts.js';
 import ItemListing from './ItemListing.js';
 import AddToCartButton from '../components/AddToCartButton';
 
-const AddProduct = () => {
+const AddProduct = ( { addProductToState } ) => {
     const [name, setName] = useState('');
     const [image, setImage] = useState('');
     const [price, setPrice] = useState('');
@@ -41,6 +41,9 @@ const AddProduct = () => {
             if (response.success) {
                 setMessage(response.message);
                 setMessageType('success');
+                
+                // Add product to currently selling state
+                addProductToState(response.data); 
             } else {
                 setMessage(response.message);
                 setMessageType('error');

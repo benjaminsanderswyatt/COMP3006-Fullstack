@@ -68,7 +68,7 @@ const SetStock = ({ product }) => {
                             onChange={(e) => {
                                 const value = e.target.value;
 
-                                if (value === '' || (!isNaN(value) && value >= 1 && value <= 999))
+                                if (value === '' || (!isNaN(value) && value >= 0 && value <= 999))
                                     setNewStock(value)
                             }}
                             min="0"

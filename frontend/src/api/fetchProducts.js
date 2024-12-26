@@ -70,9 +70,42 @@ export const getCartProducts = async (productIds) => {
 }
 
 
+// Buy your cart
+export const buyCart = async (cart) => {
+  try {
+    const token = localStorage.getItem('token');
+
+    const response = await fetch(`${API_URL}/buycart`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({ cart: cart }), // Cart containing array of product ids
+    });
+
+    const responseJson = await response.json();
+
+    if (!responseJson.success) {
+      throw new Error(responseJson.message || 'Failed to buy products');
+    }
+    
+    return {
+      success: true,
+      message: responseJson.message,
+      data: responseJson.data,
+    };
+
+  } catch (error) {
+
+    console.error('Error buying products:', error.message);
+    return { success: false, message: error.message };
+  }
+}
+
+
+
 // ---------------------- My Products ----------------------
-
-
 
 // Add a product
 export const addProduct = async (productData) => {
@@ -94,9 +127,11 @@ export const addProduct = async (productData) => {
       throw new Error(responseJson.message || 'Failed to add product');
     }
 
+
     return {
       success: true,
       message: responseJson.message,
+      data: responseJson.data,
     };
 
   } catch (error) {

@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AddProduct from '../components/AddProduct.js';
 import CurrentlySelling from '../components/CurrentlySelling.js';
 
 const MyProducts = () => {
+    const [products, setProducts] = useState([]);
+
+    // Newly added items are added to state
+    const addProductToState = (product) => {
+        setProducts((prevProducts) => [...prevProducts, product]);
+    };
 
     return (
         <div style={styles.main}>
 
-            <AddProduct />
+            <AddProduct addProductToState={addProductToState}/>
 
-            <CurrentlySelling />
+            <CurrentlySelling products={products} setProducts={setProducts}/>
 
         </div>
     );
