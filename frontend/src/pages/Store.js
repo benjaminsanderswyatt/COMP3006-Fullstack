@@ -3,6 +3,9 @@ import ItemListing from '../components/ItemListing';
 import { getAllProducts } from '../api/fetchProducts';
 import AddToCartButton from '../components/AddToCartButton';
 import SkeletonItems from '../components/SkeletonItems';
+import io from 'socket.io-client';
+
+const WEBSOCKET_URL = 'http://localhost:82';
 
 const Store = () => {
     const [products, setProducts] = useState([]);
@@ -23,6 +26,36 @@ const Store = () => {
         };
 
         getProducts();
+    }, []);
+
+
+    useEffect(() => {
+        const socket = io(WEBSOCKET_URL);
+
+        socket.on('connect', () => {
+            console.log('Connected to WebSocket server');
+        });
+        
+        socket.on('connect_error', (error) => {
+            console.error('Connection error:', error);
+        });
+
+
+        const removeEventKey = `removeUpdate`;
+
+        // Item has been removed from db -> remove from products state
+        socket.on(removeEventKey, (productId) => {
+            console.log(`Recieved Remove Update: ${productId}`);
+        
+            setProducts((prevProducts) => prevProducts.filter(product => product._id !== productId));
+        });
+
+
+        return () => {
+            socket.off(removeEventKey);
+            socket.disconnect();
+        }
+
     }, []);
 
 
@@ -47,7 +80,11 @@ const Store = () => {
                     ? 
                         // Show products
                         products.map((product) => (
-                            <ItemListing key={product._id} product={product} button={<AddToCartButton product={product} />}/>
+                            <ItemListing 
+                            key={product._id} 
+                            product={product} 
+                            button={<AddToCartButton product={product}
+                            />}/>
                         )) 
                     :
                         // There are no products

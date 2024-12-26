@@ -3,6 +3,9 @@ import { getCartProducts } from '../api/fetchProducts';
 import ItemListing from '../components/ItemListing';
 import RemoveFromCartButton from '../components/RemoveFromCartButton';
 import SkeletonItems from '../components/SkeletonItems';
+import io from 'socket.io-client';
+
+const WEBSOCKET_URL = 'http://localhost:82';
 
 
 const Cart = () => {
@@ -43,6 +46,34 @@ const Cart = () => {
         setCart(updatedCart);
     };
 
+    useEffect(() => {
+        const socket = io(WEBSOCKET_URL);
+
+        socket.on('connect', () => {
+            console.log('Connected to WebSocket server');
+        });
+        
+        socket.on('connect_error', (error) => {
+            console.error('Connection error:', error);
+        });
+
+
+        const removeEventKey = `removeUpdate`;
+
+        // Item has been removed from db -> remove from products state
+        socket.on(removeEventKey, (productId) => {
+            console.log(`Recieved Remove Update: ${productId}`);
+        
+            setCart((prevProducts) => prevProducts.filter(product => product._id !== productId));
+        });
+
+
+        return () => {
+            socket.off(removeEventKey);
+            socket.disconnect();
+        }
+
+    }, []);
 
 
     return (
@@ -65,7 +96,11 @@ const Cart = () => {
                     ? 
                         // Show products
                         cart.map((product) => (
-                            <ItemListing key={product._id} product={product} button={<RemoveFromCartButton product={product} onRemove={handleRemoveFromCart}/>}/>
+                            <ItemListing 
+                            key={product._id} 
+                            product={product} 
+                            button={<RemoveFromCartButton product={product} onRemove={handleRemoveFromCart}
+                            />}/>
                         )) 
                     :
                         // There are no items

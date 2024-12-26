@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 const WEBSOCKET_URL = 'http://localhost:82';
 
 
-const ItemListing = ({ product, button}) => {
+const ItemListing = ({ product, button }) => {
   const [currentStock, setCurrentStock] = useState(product.stock);
 
   useEffect(() => {
@@ -19,14 +19,15 @@ const ItemListing = ({ product, button}) => {
     });
 
 
-    const eventKey = `stockUpdate${product._id}`;
-    socket.on(eventKey, (newStock) => {
+    const stockEventKey = `stockUpdate${product._id}`;
+
+    socket.on(stockEventKey, (newStock) => {
       console.log(`Recieved Stock Update: ${newStock}`);
       setCurrentStock(newStock);
     });
 
     return () => {
-      socket.off(eventKey);
+      socket.off(stockEventKey);
       socket.disconnect();
     }
 

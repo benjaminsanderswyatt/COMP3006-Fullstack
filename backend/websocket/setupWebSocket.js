@@ -22,7 +22,7 @@ const emitStockUpdate = (productId, newStock) => {
 const emitRemoveUpdate = (productId) => {
   console.log("emit");
   if (io) {
-    io.emit(`removeUpdate${productId}`);
+    io.emit(`removeUpdate`, productId);
     console.log("emitted");
   }
 };
