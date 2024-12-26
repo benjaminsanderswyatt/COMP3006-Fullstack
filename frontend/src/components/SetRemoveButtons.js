@@ -2,7 +2,7 @@ import React from 'react';
 import RemoveButton from '../components/RemoveButton';
 import SetStockButton from '../components/SetStockButton';
 
-const IncDecRemove = ({ product, onRemove }) => (
+const SetRemoveButton = ({ product, onRemove }) => (
     <div style={styles.holder}>
         <SetStockButton product={product}/>
         <RemoveButton product={product} onRemove={onRemove}/>
@@ -16,4 +16,4 @@ const styles = {
     }
 }
 
-export default IncDecRemove;
+export default SetRemoveButton;

@@ -1,6 +1,69 @@
 const Product = require('../models/Product');
 const { emitStockUpdate } = require('../websocket/setupWebSocket');
 
+// ---------------------- Store ----------------------
+
+
+// Get all of the products
+exports.getProducts = async (req, res) => {
+  try {
+    const products = await Product.find();
+
+    res.status(200).json({
+      success: true,
+      message: 'Products fetched successfully',
+      data: products,
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching products',
+      error: error.message,
+    });
+    
+  }
+}
+
+
+// ---------------------- Cart ----------------------
+
+
+// Get products in my cart
+exports.cartProducts = async (req, res) => {
+  try {
+    const { productIds } = req.body;
+
+    if (!productIds || !Array.isArray(productIds)){
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid input',
+      });
+    }
+
+    const products = await Product.find({_id: { $in: productIds}}).select('_id name image price stock');
+
+    res.status(200).json({
+      success: true,
+      message: 'Fetched cart successfully',
+      data: products,
+    });
+    
+  } catch (error) {
+    
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching cart',
+      error: error.message,
+    });
+  }
+}
+
+
+
+// ---------------------- My Products ----------------------
+
 
 // Add a product
 exports.addProduct = async (req, res) => {
@@ -39,28 +102,6 @@ exports.addProduct = async (req, res) => {
 };
 
 
-// Get all of the products
-exports.getProducts = async (req, res) => {
-  try {
-    const products = await Product.find();
-
-    res.status(200).json({
-      success: true,
-      message: 'Products fetched successfully',
-      data: products,
-    });
-
-  } catch (error) {
-
-    res.status(500).json({
-      success: false,
-      message: 'Error fetching products',
-      error: error.message,
-    });
-    
-  }
-}
-
 
 // Get all products im selling
 exports.getMyProducts = async (req, res) => {
@@ -80,37 +121,6 @@ exports.getMyProducts = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Error fetching products',
-      error: error.message,
-    });
-  }
-}
-
-
-// Get products in my cart
-exports.cartProducts = async (req, res) => {
-  try {
-    const { productIds } = req.body;
-
-    if (!productIds || !Array.isArray(productIds)){
-      return res.status(400).json({
-        success: false,
-        message: 'Invalid input',
-      });
-    }
-
-    const products = await Product.find({_id: { $in: productIds}}).select('_id name image price stock');
-
-    res.status(200).json({
-      success: true,
-      message: 'Fetched cart successfully',
-      data: products,
-    });
-    
-  } catch (error) {
-    
-    res.status(500).json({
-      success: false,
-      message: 'Error fetching cart',
       error: error.message,
     });
   }
@@ -167,6 +177,47 @@ exports.setStock = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Error changing stock',
+      error: error.message,
+    });
+
+
+  }
+};
+
+
+
+
+// Remove a product
+exports.removeProduct = async (req, res) => {
+  const userId = req.user.id;
+
+  const { _id } = req.body;
+
+  if (!_id){
+    return res.status(400).json({
+      success: false,
+      message: 'All fields are required',
+    });
+  }
+
+  try {
+    // Find product by its id
+    await Product.findByIdAndDelete(_id);
+
+    // Emit remove update event
+    emitRemoveUpdate(_id);
+
+
+    res.status(201).json({
+      success: true,
+      message: 'Successfully removed item'
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+      success: false,
+      message: 'Error removing item',
       error: error.message,
     });
 
