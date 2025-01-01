@@ -9,7 +9,11 @@ const { setupWebSocket } = require('./websocket/setupWebSocket');
 
 console.log('Setting up server.js');
 
-connectDB();
+console.log('Node Env: ' + process.env.NODE_ENV);
+
+if (process.env.NODE_ENV !== 'test') {
+    connectDB();
+}
 
 const app = express();
 app.use(express.json());
@@ -37,6 +41,9 @@ let io = socketIo(server, {
 setupWebSocket(io);
 
 
-// Start Server
-const PORT = process.env.PORT || 9000;
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+if (process.env.NODE_ENV !== 'test') {
+    const PORT = process.env.PORT || 9000;
+    server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
+
+module.exports = app;
