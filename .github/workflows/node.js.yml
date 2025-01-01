@@ -35,7 +35,7 @@ jobs:
     - name: Backend Unit Tests
       run: |
         cd backend
-        npx mocha -ui tdd 'test/*.test.js'
+        npm test
 
   frontend:
     name: Frontend

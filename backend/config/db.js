@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 
-
-
 const connectDB = async () => {
 
   const mongoURI = process.env.MONGO_URI || 'mongodb://root:password@database:27017/database?authSource=admin';
@@ -14,6 +12,5 @@ const connectDB = async () => {
   }
 
 };
-
 
 module.exports = connectDB;
