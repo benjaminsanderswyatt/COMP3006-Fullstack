@@ -14,14 +14,13 @@ router.get('/get', verifyToken, getProducts);
 
 router.post('/cart', verifyToken, cartProducts);
 
-
 // ---------------------- My Products ----------------------
 
 router.post('/add', verifyToken, addProduct);
 
 router.get('/myproducts', verifyToken, getMyProducts);
 
-router.post('/setstock', verifyToken, setStock);
+router.patch('/setstock', verifyToken, setStock);
 
 router.delete('/removeproduct', verifyToken, removeProduct);
 
