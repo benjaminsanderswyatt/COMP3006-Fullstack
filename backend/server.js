@@ -21,7 +21,7 @@ app.use(express.json());
 // Cors config
 const corsOptions = {
     origin: 'http://localhost:81', // Frontend URL
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // HTTP methods
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], // HTTP methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
 };
 app.use(cors(corsOptions));
