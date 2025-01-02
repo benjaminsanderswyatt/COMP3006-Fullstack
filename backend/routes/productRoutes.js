@@ -23,7 +23,7 @@ router.get('/myproducts', verifyToken, getMyProducts);
 
 router.post('/setstock', verifyToken, setStock);
 
-router.post('/removeproduct', verifyToken, removeProduct);
+router.delete('/removeproduct', verifyToken, removeProduct);
 
 
 
