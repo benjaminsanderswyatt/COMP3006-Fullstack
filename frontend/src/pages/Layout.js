@@ -9,7 +9,7 @@ const Layout = () => {
       <div style={styles.header}>
         <h1>Header</h1>
         { token && (
-          <button onClick={() => navigate("/cart")}>Cart</button>
+          <button style={styles.cartButton} onClick={() => navigate("/cart")}>Cart</button>
         )}
       </div>
       
@@ -55,6 +55,16 @@ const styles = {
     backgroundColor: "#52a5de",
     color: "black",
     minHeight: "12vh",
+  },
+  cartButton: {
+    cursor: "pointer",
+    padding: "20px 20px",
+    backgroundColor: "#ff9f40",
+    border: "solid",
+    borderRadius: "8px",
+    color: "black",
+    fontWeight: "bold",
+    fontSize: "1.1rem",
   },
   logButton: {
     cursor: "pointer",
