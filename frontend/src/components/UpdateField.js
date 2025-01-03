@@ -45,7 +45,7 @@ const UpdateField = ({ field }) => {
             placeholder={`Enter new ${field}`}
             style={styles.input}
           />
-          
+
         </label>
 
         {message && <p style={{ ...styles.message, ...messageStyle }}>{message}</p>}
@@ -80,7 +80,6 @@ const styles = {
     boxSizing: "border-box",
     padding: '8px',
     margin: '10px 0px',
-    fontSize: '16px',
     width: '100%',
   },
   button: {

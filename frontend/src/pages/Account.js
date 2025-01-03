@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router';
 import UpdateField from '../components/UpdateField';
 
-const WEBSOCKET_URL = 'http://localhost:82';
 
 const Account = () => {
     const navigate = useNavigate();
-    const [message, setMessage] = useState('');
-    const [messageType, setMessageType] = useState(''); // 'success' or 'error'
 
     const handleLogout = () => {
         // Remove token from localStorage
