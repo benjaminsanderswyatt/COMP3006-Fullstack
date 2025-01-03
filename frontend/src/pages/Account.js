@@ -39,10 +39,13 @@ const Account = () => {
                 <UpdateField field="email"/>
                 <UpdateField field="password"/>
 
-                <button style={styles.logoutButton} onClick={handleLogout}>Logout</button>
+                <div style={styles.buttonHolder}>
+                    <button style={styles.logoutButton} onClick={handleLogout}>Logout</button>
 
-                <button style={styles.deleteButton} onClick={handleDeleteAccount}>Delete Account</button>
+                    <button style={styles.deleteButton} onClick={handleDeleteAccount}>Delete Account</button>
 
+                </div>
+                
             </div>
 
 
@@ -68,10 +71,15 @@ const styles = {
         padding: '20px',
         width: 'auto',
     },
+    buttonHolder: {
+        display: 'flex',
+        gap: '20px',
+        overflow: 'auto',
+    },
     logoutButton: {
         background: '#FF4747',
         marginTop: '50px',
-        width: '50%',
+        width: '70%',
         minWidth: '100px',
         border: 'none',
         borderRadius: '10px',
@@ -79,12 +87,11 @@ const styles = {
         fontSize: '1rem',
         cursor: 'pointer',
         padding: '5px',
-        
     },
     deleteButton: {
-        background: '#FF4747',
+        background: '#BF3535',
         marginTop: '20px',
-        width: '50%',
+        width: '30%',
         minWidth: '100px',
         border: 'none',
         borderRadius: '10px',
