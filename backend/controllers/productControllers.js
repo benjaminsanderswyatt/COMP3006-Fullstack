@@ -60,6 +60,7 @@ exports.cartProducts = async (req, res) => {
   }
 }
 
+
 // Buy cart
 exports.buyCart = async (req, res) => {
   const userId = req.user.id; // Would be used to charge customer
@@ -76,6 +77,8 @@ exports.buyCart = async (req, res) => {
 
   const failedProducts = []; // Holds products which couldnt be bought
   const successfulProducts = []; // Holds successfully bought products
+  let totalCost = 0; // Total cost of all products bought
+
 
   try {
 
@@ -98,6 +101,9 @@ exports.buyCart = async (req, res) => {
       product.stock -= 1;
       await product.save();
 
+      // Add cost to total
+      totalCost += product.price;
+
       emitStockUpdate(product._id, product.stock);
       successfulProducts.push({ _id: product._id, name: product.name }); // Add product id to the successful list
 
@@ -110,7 +116,8 @@ exports.buyCart = async (req, res) => {
       message: 'Successfully bought products',
       data: {
         successful: successfulProducts,
-        failed: failedProducts
+        failed: failedProducts,
+        cost: totalCost,
       }
     });
     

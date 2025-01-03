@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { buyCart } from '../api/fetchProducts';
 
-const BuyCartButton = () => {
+const BuyCartButton = ({ setCart }) => {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState('');
@@ -9,6 +9,7 @@ const BuyCartButton = () => {
     const [failed, setFailed] = useState('');
     const [totalCost, setTotalCost] = useState(0);
 
+    
     const BuyCart = async () => {
         const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -30,38 +31,30 @@ const BuyCartButton = () => {
                 setMessageType('success');
                 
                 //Add successProducts to the backend buy api
-                const { successProducts, failedProducts, totalCost } = response.data;
+                const { successful, failed, cost } = response.data;
 
                 setBought(
-                    successProducts.length > 0
-                        ? `Bought: ${successProducts.map(p => p.name).join(', ')}`
+                    successful.length > 0
+                        ? `Bought: ${successful.map(p => p.name).join(', ')}`
                         : ''
                 );
 
                 setFailed(
-                    failedProducts.length > 0
-                        ? `No stock available: ${failedProducts.map(p => p.name).join(', ')}`
+                    failed.length > 0
+                        ? `No stock available: ${failed.map(p => p.name).join(', ')}`
                         : ''
                 );
                 
-                setTotalCost(totalCost);
+                setTotalCost(cost);
 
+                
                 // Update localStorage to remove successfully purchased items
                 const remainingCart = cart.filter(cartItem =>
-                    failedProducts.some(failed => failed.id === cartItem.id)
+                    !successful.some(success => success._id === cartItem._id) // Remove successful items
                 );
                 localStorage.setItem('cart', JSON.stringify(remainingCart));
                 
-
-                
-                // Layout like
-                // Cost: £49.49
-                // Bought: productName1,
-                //         productName2,
-                //
-                // No stock available: productNameA,
-                //                     productNameB,
-                //                     productNameC,
+                setCart(remainingCart); // Update the cart products state
 
             } else {
                 setMessage(response.message);
@@ -100,11 +93,12 @@ const BuyCartButton = () => {
             </button>
 
             {message && <p style={{ ...styles.message, ...messageStyle }}>{message}</p>}
+
             {bought && <p style={styles.boughtMessage}>{bought}</p>}
             {failed && <p style={styles.failedMessage}>{failed}</p>}
 
             {totalCost > 0 && (
-                <p style={styles.totalCost}>Cost: £{totalCost.toFixed(2)}</p>
+                <p style={styles.totalCost}>You payed: £{totalCost.toFixed(2)}</p>
             )}
         </div>
     )

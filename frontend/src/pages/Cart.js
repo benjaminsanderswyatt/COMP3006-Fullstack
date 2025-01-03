@@ -77,6 +77,17 @@ const Cart = () => {
     }, []);
 
 
+    const calculateTotalPrice = () => {
+        return cart.reduce((total, product) => {
+            if (product.stock > 0) {
+                return total + product.price; // Add price only if stock is more than 0
+            }
+            return total;
+        }, 0);
+    };
+
+
+
     return (
         <div style={styles.main}>
             <h1>Cart</h1>
@@ -112,7 +123,12 @@ const Cart = () => {
 
             </div>
 
-            <BuyCartButton/>
+
+            <div style={styles.totalPrice}>
+                <h3>Total: £{calculateTotalPrice()}</h3>
+            </div>
+
+            <BuyCartButton setCart={setCart}/>
             
         </div>
     );
@@ -122,10 +138,8 @@ const styles = {
     main: {
         padding: '20px',
         textAlign: 'center',
+        width: '100%',
     },
-
-
-
     message: {
         color: 'red',
         fontWeight: 'bold',
@@ -142,6 +156,12 @@ const styles = {
         padding: '20px',
         width: 'auto',
         justifyItems: 'center',
+    },
+    totalPrice: {
+        marginTop: '20px',
+        fontSize: '24px',
+        fontWeight: 'bold',
+        color: '#333333',
     },
 };
 
