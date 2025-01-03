@@ -34,14 +34,25 @@ exports.loginUser = async (req, res) => {
 // Update User
 exports.updateUser = async (req, res) => {
   const userId = req.user.id;
+  const { username, email, password } = req.body;
+
+  if (typeof username !== 'string' && username !== null) {
+    return res.status(400).json({ message: 'Invalid username format' });
+  }
+  if (typeof email !== 'string' && email !== null) {
+    return res.status(400).json({ message: 'Invalid email format' });
+  }
+  if (typeof password !== 'string' && password !== null) {
+    return res.status(400).json({ message: 'Invalid password format' });
+  }
+
 
   try {
     const user = await User.findById(userId);
 
     if (!user) {
-      return res.status(404).json({ message: 'User updated successfully'});
+      return res.status(404).json({ message: 'Failed to update'});
     }
-
 
     // Check for unique username
     if (username && username !== user.username) {

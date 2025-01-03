@@ -48,9 +48,19 @@ export const login = async (email, password) => {
 };
 
 
-export const updateUser = async (username, email, password) => {
+export const updateUser = async (accountData) => {
   try {
     const token = localStorage.getItem('token');
+
+    console.log('accountData body:', accountData);
+
+    const body = {
+      username: accountData.username || null,
+      email: accountData.email || null,
+      password: accountData.password || null,
+    }
+
+    console.log('Request body:', body);
 
     const response = await fetch(`${API_URL}/update`, {
       method: 'PUT',
@@ -58,10 +68,14 @@ export const updateUser = async (username, email, password) => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`, // Include the token in the Authorization header
       },
-      body: JSON.stringify({ username, email, password }), // Username, email & password can be null
+      body: JSON.stringify(body), // Username, email & password can be null
     });
 
+    console.log('Request body {}:', { body });
+
     const responseJson = await response.json();
+
+    console.log('Response:', responseJson);
 
     if (!response.ok) {
       throw new Error(responseJson.message || "Failed to update user");

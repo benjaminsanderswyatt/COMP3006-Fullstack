@@ -8,6 +8,8 @@ const UpdateField = ({ field }) => {
 
   const token = localStorage.getItem('token');
 
+  const capitalField = `${field.charAt(0).toUpperCase() + field.slice(1)}`;
+
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,18 +17,21 @@ const UpdateField = ({ field }) => {
     setMessageType('');
 
     const updateData = { [field]: value };
-    const result = await updateUser(token, updateData);
+    const response = await updateUser(updateData);
 
-    if (result.success) {
-      setMessage(`${field} updated successfully.`);
+    if (response.success) {
+      setMessage(`${capitalField} updated successfully.`);
       setMessageType('success');
       setValue('');
     } else {
-      setMessage(`Error updating ${field}: ${result.message}`);
+      setMessage(`Error updating ${field}: ${response.message}`);
       setMessageType('error');
     }
   };
 
+
+  // The input type
+  const inputType = field === 'password' ? 'password' : field === 'email' ? 'email' : 'text';
 
   // Message colour, green for success, red for failure
   const messageStyle = messageType === 'success' ? { color: 'green' } : { color: 'red' };
@@ -36,10 +41,10 @@ const UpdateField = ({ field }) => {
       <form onSubmit={handleSubmit}>
 
         <label>
-          {`Change ${field.charAt(0).toUpperCase() + field.slice(1)}?`}
+          {`Change ${capitalField}?`}
 
           <input
-            type={field === 'password' ? 'password' : 'text'}
+            type={inputType}
             value={value}
             onChange={(e) => setValue(e.target.value)}
             placeholder={`Enter new ${field}`}

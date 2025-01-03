@@ -22,7 +22,7 @@ const Account = () => {
             <div style={styles.holder}>
                 <UpdateField field="username"/>
                 <UpdateField field="email"/>
-                <UpdateField field="hi"/>
+                <UpdateField field="password"/>
 
                 <button style={styles.logoutButton} onClick={handleLogout}>Logout</button>
 
