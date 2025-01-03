@@ -90,7 +90,7 @@ const styles = {
     message: {
         marginTop: '15px',
         fontWeight: 'bold',
-      },
+    },
     productList: {
         background: '#ebf9ff',
         border: 'solid',

@@ -3,6 +3,7 @@ import { getCartProducts } from '../api/fetchProducts';
 import ItemListing from '../components/ItemListing';
 import RemoveFromCartButton from '../components/RemoveFromCartButton';
 import SkeletonItems from '../components/SkeletonItems';
+import BuyCartButton from '../components/BuyCartButton';
 import io from 'socket.io-client';
 
 const WEBSOCKET_URL = 'http://localhost:82';
@@ -111,6 +112,7 @@ const Cart = () => {
 
             </div>
 
+            <BuyCartButton/>
             
         </div>
     );

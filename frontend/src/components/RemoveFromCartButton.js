@@ -3,7 +3,19 @@ import React from 'react';
 const RemoveFromCartButton = ({ product, onRemove }) => {
 
     const RemoveFromCart = (productId) => {
+        console.log(`Removing ${productId}`);
 
+        // Get the current cart from localstorage
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        // Remove the product with product Id
+        const updatedCart = cart.filter(item => item._id !== productId);
+
+        // Store back into localstorage
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+
+        // Remove the item from the Cart state
+        onRemove(updatedCart);
     }
 
     return (
@@ -22,7 +34,11 @@ const styles = {
     color: 'white',
     fontSize: '1rem',
     cursor: 'pointer',
-  }
+  },
+  message: {
+    marginTop: '15px',
+    fontWeight: 'bold',
+  },
 }
 
 export default RemoveFromCartButton;
