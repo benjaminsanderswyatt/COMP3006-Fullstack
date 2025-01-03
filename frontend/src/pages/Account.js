@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
 import UpdateField from '../components/UpdateField';
+import { deleteUser } from '../api/fetchUsers';
 
 
 const Account = () => {
@@ -8,8 +9,22 @@ const Account = () => {
 
     const handleLogout = () => {
         // Remove token from localStorage
+        localStorage.removeItem('cart');
         localStorage.removeItem('token');
         navigate('/');
+    };
+
+
+    const handleDeleteAccount = async () => {
+        if (window.confirm('Are you sure you want to delete your account?')) {
+            const result = await deleteUser();
+
+            if (result.success) {
+                handleLogout(); // Logout user after account is deleted
+            } else {
+                alert(result.message);
+            }
+        }
     };
 
 
@@ -25,6 +40,8 @@ const Account = () => {
                 <UpdateField field="password"/>
 
                 <button style={styles.logoutButton} onClick={handleLogout}>Logout</button>
+
+                <button style={styles.deleteButton} onClick={handleDeleteAccount}>Delete Account</button>
 
             </div>
 
@@ -63,7 +80,19 @@ const styles = {
         cursor: 'pointer',
         padding: '5px',
         
-      }
+    },
+    deleteButton: {
+        background: '#FF4747',
+        marginTop: '20px',
+        width: '50%',
+        minWidth: '100px',
+        border: 'none',
+        borderRadius: '10px',
+        color: 'white',
+        fontSize: '1rem',
+        cursor: 'pointer',
+        padding: '5px',
+    },
 };
 
 
