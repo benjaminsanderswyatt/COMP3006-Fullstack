@@ -1,15 +1,57 @@
+import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router";
 
 const Layout = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem('token'); // Check for token (user is logged in)
+  const [cartCount, setCartCount] = useState(0);
+
+  // Gets how many items in the cart
+  const updateCartCount = () => {
+    try {
+      const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+      setCartCount(Array.isArray(storedCart) ? storedCart.length : 0); // Ensure it's an array before using length
+
+    } catch (error) {
+      console.error("Error parsing cart data from localStorage:", error);
+      setCartCount(0);
+
+    }
+  };
+
+  useEffect(() => {
+    if (token) {
+      updateCartCount();
+    }
+
+    // Listen for changes to local storage
+    const handleStorageChange = (event) => {
+      if (event.key === "cart") {
+        updateCartCount();
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    // Stop listening on end
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [token]);
+
 
   return (
     <div style={styles.constainer}>
       <div style={styles.header}>
         <h1>Header</h1>
         { token && (
-          <button style={styles.cartButton} onClick={() => navigate("/cart")}>Cart</button>
+          <div style={styles.cartButtonHolder} onClick={() => navigate("/cart")}>
+            {cartCount > 0 && (
+              <div style={styles.cartCount}>{cartCount}</div>
+            )}
+
+            <div style={styles.cartButton}>Cart</div>
+          </div>
         )}
       </div>
       
@@ -56,15 +98,34 @@ const styles = {
     color: "black",
     minHeight: "12vh",
   },
+  cartButtonHolder: {
+    position: "relative",
+    display: "flex",
+    alignItems: "center",
+     cursor: "pointer",
+  },
   cartButton: {
-    cursor: "pointer",
-    padding: "20px 20px",
+    padding: "10px 20px",
     backgroundColor: "#ff9f40",
     border: "solid",
     borderRadius: "8px",
     color: "black",
     fontWeight: "bold",
     fontSize: "1.1rem",
+  },
+  cartCount: {
+    position: "absolute",
+    top: "-10px",
+    right: "-10px",
+    backgroundColor: "#ff2085",
+    color: "white",
+    borderRadius: "50%",
+    border: 'solid black',
+    fontSize: "1rem",
+    fontWeight: "bold",
+    height: "25px",
+    width: "25px",
+    textAlign: "center",
   },
   logButton: {
     cursor: "pointer",
