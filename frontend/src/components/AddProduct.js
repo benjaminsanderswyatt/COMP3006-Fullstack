@@ -58,7 +58,7 @@ const AddProduct = ( { addProductToState } ) => {
     // Preview of added item
     const product = {
         name: name || "Name",
-        image: image,
+        image: image || 'https://placehold.co/1600x1200',
         price: price || "?",
         stock: stock || "?"
     };
