@@ -1,6 +1,6 @@
 const express = require('express');
 const { verifyToken } = require('../middleware/authJWT');
-const { addProduct, getProducts, getMyProducts, cartProducts, setStock, removeProduct } = require('../controllers/productControllers');
+const { addProduct, getProducts, getMyProducts, cartProducts, setStock, removeProduct, buyCart } = require('../controllers/productControllers');
 
 
 const router = express.Router();
@@ -13,6 +13,9 @@ router.get('/get', verifyToken, getProducts);
 // ---------------------- Cart ----------------------
 
 router.post('/cart', verifyToken, cartProducts);
+
+router.post('/buycart', verifyToken, buyCart);
+
 
 // ---------------------- My Products ----------------------
 
