@@ -62,7 +62,7 @@ exports.cartProducts = async (req, res) => {
 
 // Buy cart
 exports.buyCart = async (req, res) => {
-  const userId = req.user.id;
+  const userId = req.user.id; // Would be used to charge customer
 
   const { cart } = req.body;
 
@@ -74,53 +74,49 @@ exports.buyCart = async (req, res) => {
   }
 
 
-  try {
-    // Start transaction
-    const session = await Product.startSession(); 
-    session.startTransaction();
+  const failedProducts = []; // Holds products which couldnt be bought
+  const successfulProducts = []; // Holds successfully bought products
 
-    const stockUpdates = []; // For updating stock through websockets
+  try {
+
 
     for (const productId of cart) {
 
       // Find the product
-      const product = await Product.findById(productId).session(session);
+      const product = await Product.findById(productId);
       if (!product) {
-        throw new Error(`Product with id ${productId} not found`);
+        failedProducts.push({ _id: productId, name: "Product not found" }); // Add product id to the failed list if not found
+        continue;
       }
 
       if (product.stock < 1) {
-        throw new Error(`Insufficient stock for product: ${product.name}`);
+        failedProducts.push({ _id: product._id, name: product.name }); // Add product ID to the failed list if insufficient stock
+        continue;
       }
 
       // Deduct stock by 1
       product.stock -= 1;
-      await product.save({ session });
+      await product.save();
 
-      // Prepare stock update event
-      stockUpdates.push({ productId: product._id, stock: product.stock });
+      emitStockUpdate(product._id, product.stock);
+      successfulProducts.push({ _id: product._id, name: product.name }); // Add product id to the successful list
 
     }
 
-    // Commit the transaction
-    await session.commitTransaction();
-    session.endSession();
 
-    // Emit for stock updates for items
-    stockUpdates.forEach(update => emitStockUpdate(update.productId, update.stock));
-
-
-
-    res.status(201).json({
+    
+    res.status(200).json({
       success: true,
-      message: 'Successfully bought products'
+      message: 'Successfully bought products',
+      data: {
+        successful: successfulProducts,
+        failed: failedProducts
+      }
     });
+    
 
   } catch (error) {
-
-    // Rollback transaction on failure
-    await session.abortTransaction();
-    session.endSession();
+    console.log(`Error Buying: ${error}`);
 
     res.status(500).json({
       success: false,
@@ -156,7 +152,6 @@ exports.addProduct = async (req, res) => {
     await product.save();
 
 
-    console.log(`Db Id: ${product._id}`);
     res.status(201).json({
       success: true,
       message: 'Product added successfully',

@@ -168,7 +168,15 @@ describe('Product Controller Tests', () => {
         // Assert: verify success status and the failedProducts list
         expect(response.status).toBe(200);
         expect(response.body.success).toBe(true);
-        expect(response.body.data.length).toBe(0); // No products should fail
+        expect(response.body.data.successful).toEqual(
+            expect.arrayContaining([
+              expect.objectContaining({
+                _id: expect.any(String), // Ensure the _id is returned
+                name: "Test Product", // Ensure the name is correct
+              }),
+            ])
+          );
+        expect(response.body.data.failed).toEqual([]); // No products should fail
 
     });
 
