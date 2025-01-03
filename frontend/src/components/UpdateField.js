@@ -6,8 +6,6 @@ const UpdateField = ({ field }) => {
   const [message, setMessage] = useState(null);
   const [messageType, setMessageType] = useState(''); // Stores if the message is 'success' or 'error'
 
-  const token = localStorage.getItem('token');
-
   const capitalField = `${field.charAt(0).toUpperCase() + field.slice(1)}`;
 
   
