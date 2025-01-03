@@ -43,7 +43,7 @@ const Layout = () => {
   return (
     <div style={styles.constainer}>
       <div style={styles.header}>
-        <h1>Header</h1>
+        <h1>E-commerce</h1>
         { token && (
           <div style={styles.cartButtonHolder} onClick={() => navigate("/cart")}>
             {cartCount > 0 && (

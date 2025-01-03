@@ -11,14 +11,14 @@ const RemoveProduct = ({ product, onRemove }) => {
 
 const styles = {
     RemoveProduct: {
-    background: '#FF4747',
-    width: '100%',
-    border: 'none',
-    borderRadius: '10px',
-    color: 'white',
-    fontSize: '1rem',
-    cursor: 'pointer',
-  }
+        background: '#FF4747',
+        width: '100%',
+        border: 'none',
+        borderRadius: '10px',
+        color: 'white',
+        fontSize: '1rem',
+        cursor: 'pointer',
+    }
 }
 
 export default RemoveProduct;
