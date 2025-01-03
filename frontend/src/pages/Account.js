@@ -13,12 +13,6 @@ const Account = () => {
     };
 
 
-    const handleUpdateMessage = (msg, type) => {
-        setMessage(msg);
-        setMessageType(type);
-    };
-
-
     return (
         <div style={styles.main}>
             
@@ -26,9 +20,9 @@ const Account = () => {
             <h1>Account</h1>
 
             <div style={styles.holder}>
-                <UpdateField field="username" onUpdateMessage={handleUpdateMessage} />
-                <UpdateField field="email" onUpdateMessage={handleUpdateMessage} />
-                <UpdateField field="hi" onUpdateMessage={handleUpdateMessage} />
+                <UpdateField field="username"/>
+                <UpdateField field="email"/>
+                <UpdateField field="hi"/>
 
                 <button style={styles.logoutButton} onClick={handleLogout}>Logout</button>
 
