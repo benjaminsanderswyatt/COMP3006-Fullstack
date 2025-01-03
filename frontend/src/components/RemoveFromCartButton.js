@@ -16,6 +16,10 @@ const RemoveFromCartButton = ({ product, onRemove }) => {
 
         // Remove the item from the Cart state
         onRemove(updatedCart);
+
+        // Notify "Layout" that the cart has changed
+        const event = new CustomEvent('cartUpdated');
+        window.dispatchEvent(event);
     }
 
     return (

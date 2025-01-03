@@ -39,6 +39,11 @@ const AddToCartButton = ({ product, disabled }) => {
         localStorage.setItem("cart", JSON.stringify(cart));
 
         setIsInCart(true);
+
+        // Notify "Layout" that the cart has changed
+        const event = new CustomEvent('cartUpdated');
+        window.dispatchEvent(event);
+
     }
 
     // Styles changes based on disabled

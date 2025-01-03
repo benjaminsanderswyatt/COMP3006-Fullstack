@@ -73,6 +73,12 @@ const BuyCartButton = () => {
             setMessageType('error');
         }
 
+
+        
+        // Notify "Layout" that the cart has changed
+        const event = new CustomEvent('cartUpdated');
+        window.dispatchEvent(event);
+
         setLoading(false);
     }
 

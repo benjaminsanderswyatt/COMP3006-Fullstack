@@ -24,17 +24,29 @@ const Layout = () => {
       updateCartCount();
     }
 
+    
     // Listen for changes to local storage
+    const handleCartUpdate = (event) => {
+      updateCartCount();
+    };
+
     const handleStorageChange = (event) => {
       if (event.key === "cart") {
         updateCartCount();
       }
     };
 
+
+    // Listen for changes within tab
+    window.addEventListener("cartUpdated", handleCartUpdate);
+
+    // Listen for changes on other tabs
     window.addEventListener("storage", handleStorageChange);
 
     // Stop listening on end
     return () => {
+      window.removeEventListener("cartUpdated", handleCartUpdate);
+
       window.removeEventListener("storage", handleStorageChange);
     };
   }, [token]);
