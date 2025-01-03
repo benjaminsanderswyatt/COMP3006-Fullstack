@@ -81,7 +81,7 @@ export const buyCart = async (cart) => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
       },
-      body: JSON.stringify({ cart: cart }), // Cart containing array of product ids
+      body: JSON.stringify({ cart }), // Cart containing array of product ids
     });
 
     const responseJson = await response.json();
@@ -181,7 +181,7 @@ export const setStock = async (productId, newStock) => {
     const token = localStorage.getItem('token');
 
     const response = await fetch(`${API_URL}/setstock`, {
-      method: 'POST',
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
@@ -216,7 +216,7 @@ export const removeProduct = async (productId) => {
     const token = localStorage.getItem('token');
 
     const response = await fetch(`${API_URL}/removeproduct`, {
-      method: 'POST',
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,

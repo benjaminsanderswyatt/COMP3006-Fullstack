@@ -28,8 +28,8 @@ const BuyCartButton = () => {
             if (response.success){
                 setMessage(response.message);
                 setMessageType('success');
-                /*
-                Add successProducts to the backend buy api
+                
+                //Add successProducts to the backend buy api
                 const { successProducts, failedProducts, totalCost } = response.data;
 
                 setBought(
@@ -51,14 +51,9 @@ const BuyCartButton = () => {
                     failedProducts.some(failed => failed.id === cartItem.id)
                 );
                 localStorage.setItem('cart', JSON.stringify(remainingCart));
-                */
+                
 
-                // Get the failled products
-                // Remove the successfull products from localstorage & state
-                // if the product failed as it couldnt be found remove it from localstorage name:"Product not found"
-                // if product failed and returned id, name then say coz of no stock
-                // response.data -> [{Id,Name},{Id,Name},{Id,Name}]
-                //
+                
                 // Layout like
                 // Cost: £49.49
                 // Bought: productName1,
