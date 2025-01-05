@@ -15,17 +15,23 @@ COPY . .
 # Build the React app for production
 RUN npm run build
 
-# Stage 2: Serve the React app using Nginx
-FROM nginx:alpine
+# Stage 2: Serve the React app
+FROM node:22.9.0 AS serve
 
-# Copy the build output from the build stage
-COPY --from=build /app/build /usr/share/nginx/html
+WORKDIR /app
 
-# Copy the nginx configs for routing
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy only production dependencies
+COPY package*.json ./
+RUN npm install --production
 
-# Expose port 80 (Nginx default port)
+# Copy the build output to serve the app
+COPY --from=build /app/build ./build
+
+# Add server.js for serving static files
+COPY server.js ./
+
+# Expose port 80
 EXPOSE 80
 
-# Start Nginx in the foreground
-CMD ["nginx", "-g", "daemon off;"]
+# Start the server
+CMD ["node", "server.js"]
