@@ -101,7 +101,7 @@ const Login = () => {
           navigate("/store"); // Navigate
         } else {
           setMessageType('error');
-          setMessage("Incorrect username or password. Please try again.");
+          setMessage("Incorrect email or password. Please try again.");
         }
 
       } catch (error) {

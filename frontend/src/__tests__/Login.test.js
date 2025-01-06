@@ -143,7 +143,7 @@ describe('Login Component', () => {
     // Assert: Verify that the login has failed
     await waitFor(() => {
       expect(loginSpy).toHaveBeenCalledWith('wrong@email.com', 'wrongpassword');
-      expect(screen.getByText('Incorrect username or password. Please try again.')).toBeInTheDocument();
+      expect(screen.getByText('Incorrect email or password. Please try again.')).toBeInTheDocument();
     });
 
     loginSpy.mockRestore();
