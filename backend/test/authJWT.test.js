@@ -16,11 +16,13 @@ describe('verifyToken Middleware', () => {
   };
   const mockNext = jest.fn();
 
+  
   afterEach(() => {
     jest.clearAllMocks(); // Reset mocks between tests
   });
 
-  test('should return 401 if no token is provided', () => {
+
+  it('should return 401 if no token is provided', () => {
     // Arrange: Create mock request without authorization header
     const req = mockReq();
     const res = mockRes();
@@ -34,7 +36,8 @@ describe('verifyToken Middleware', () => {
     expect(mockNext).not.toHaveBeenCalled();
   });
 
-  test('should return 401 if token verification fails', () => {
+
+  it('should return 401 if token verification fails', () => {
     // Arrange: Create mock request with invalid token
     const req = mockReq();
     req.headers['authorization'] = 'Bearer invalidToken';
@@ -52,7 +55,8 @@ describe('verifyToken Middleware', () => {
     expect(mockNext).not.toHaveBeenCalled();
   });
 
-  test('should call next() if token is valid', () => {
+
+  it('should call next() if token is valid', () => {
     // Arrange: Create mock request with valid token
     const req = mockReq();
     req.headers['authorization'] = 'Bearer validToken';
@@ -70,7 +74,8 @@ describe('verifyToken Middleware', () => {
     expect(res.json).not.toHaveBeenCalled();
   });
 
-  test('should return 401 if token format is invalid', () => {
+
+  it('should return 401 if token format is invalid', () => {
     // Arrange: Create mock request with malformed authorization header
     const req = mockReq();
     req.headers['authorization'] = 'InvalidHeaderFormat';

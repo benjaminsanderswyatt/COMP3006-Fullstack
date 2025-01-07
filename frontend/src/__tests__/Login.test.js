@@ -11,8 +11,11 @@ describe('Login Component', () => {
     jest.clearAllMocks();
   });
 
+  afterEach(() => {
+    localStorage.clear();
+  });
 
-
+  
   it('renders login form initially', () => {
     // Arrange: mock Login page
     act(() => {
