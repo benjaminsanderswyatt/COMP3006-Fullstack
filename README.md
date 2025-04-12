@@ -1,3 +1,5 @@
+![Banner](./banner.png)
+
 # Fullstack Comp 3006
 
 ### Target Audience
